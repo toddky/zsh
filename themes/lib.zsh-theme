@@ -1,0 +1,30 @@
+
+local here=${0:h}
+source $here/colors.zsh-theme
+source $here/directory.zsh
+source $here/display.zsh
+source $here/git.zsh
+source $here/host.zsh
+source $here/pre.zsh
+source $here/prompt.zsh
+source $here/time.zsh
+
+# --- Prompt Performance ---
+function pperf() {
+	_perf preexec
+	_perf precmd
+	_perf build_prompt
+	_perf build_rprompt
+}
+
+function _perf() {
+	local start_ms=$(date +%s%3N)
+	$@ > /dev/null
+	echo "$1: $(($(date +%s%3N)-$start_ms))"
+}
+
+# --- Set Title ---
+function _set-title() {
+	print -Pn "\e]0;$@\a"
+}
+
