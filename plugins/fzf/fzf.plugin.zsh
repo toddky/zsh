@@ -40,36 +40,6 @@ bindkey -M viins '^F' my-fzf-search
 # FUNCTIONS
 # ==============================================================================
 
-# List Git directories
-function fzf-gitdirs() {
-	[[ -d $GIT_TOP ]] || return 0
-	# This is too slow for large directories
-	#fzf-gitfiles | xargs -n 1 dirname | uniq
-	git -C $GIT_TOP ls-files | sed -e 's/^/$GIT_TOP\//' -e 's/\/[^/]*$//' | awk '!count[$0]++'
-}
-
-
-# Recrusively list directories, shallow first
-function fzf-dirs() {
-	local dir file here=${1-.}
-	local -U dirs
-	dirs=($here)
-
-	# For each directory
-	while (( ${#dirs} != 0 )); do
-		dir=$dirs[1]
-		dirs[1]=()
-		echo ${dir#./}
-
-		# For each file
-		for file in $(\ls $dir); do
-			entry=$dir/$file
-			[[ -d $entry ]] && dirs+=($entry)
-		done
-	done
-}
-
-
 # List hosts
 function fzf-hosts() {
 	command grep -oE '^[[a-z0-9.,:-]+' ~/.ssh/known_hosts | tr ',' '\n' | tr -d '[' | sort -u
