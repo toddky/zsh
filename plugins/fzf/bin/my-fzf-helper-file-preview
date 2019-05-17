@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+file=$(echo $@ | awk '{print $NF}')
+file $file | awk '{$1=""; print}' | grep -v text && exit 0
+
+base=$(basename $file .log)
+
+# If log file
+echo -e "\e[33m==> $file <==\e[0m"
+if [[ $file != $base ]]; then
+	head -n 5 $file
+	echo -e "\e[31m...\e[0m"
+	tail -n 10 $file
+else
+	head -n 50 $file
+	echo -e "\e[31m...\e[0m"
+fi
+echo -e "\e[33m==> end of preview <==\e[0m"
+

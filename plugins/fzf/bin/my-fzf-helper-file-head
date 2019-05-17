@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-file=$(echo $@ | awk '{print $NF}')
-echo -e "\e[33m==> $file <==\e[0m"
-head -n 50 $file
-echo -e "\e[33m==> end of preview <==\e[0m"
