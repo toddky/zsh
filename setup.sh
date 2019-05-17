@@ -8,29 +8,31 @@ declare -r now=$(date +%Y%m%d-%H%M%S)
 # Print stderr in red
 exec 2> >(while read line; do echo -e "\e[31m[stderr]\e[0m $line"; done)
 
-# Print custom pipe in blue
-exec 5> >(while read line; do echo -e "\e[34m$line\e[0m"; done)
-
 # Immediately exit on failure
 set -eo pipefail
-#set -euo pipefail
 
 IFS=$'\n\t'
 
-# Create ~/.zsh symlink
-current_zsh=$(readlink -f ~/.zsh)
+# Create $HOME/.zsh symlink
+current_zsh=$(readlink -f $HOME/.zsh)
 if [[ $current_zsh != $top ]]; then
-	echo "Creating ~/.zsh symlink..." 1>&5
-	[[ -e ~/.zsh ]] && mv ~/.zsh ~/.zsh-old.$now
-	ln -sf $top ~/.zsh
+	echo "Creating $HOME/.zsh symlink..." 1>&5
+	[[ -e $HOME/.zsh ]] && mv $HOME/.zsh $HOME/.zsh-old.$now
+	ln -sf $top $HOME/.zsh
 fi
 
-for f in zlogin zprofile zshenv zshrc; do
-	[[ -e ~/.$f ]] && mv ~/.$f ~/.$f-old.$now
-	ln -sf .zsh/$f ~/.$f
+# Create zsh symlinks
+for file in zlogin zprofile zshenv zshrc; do
+	link=$HOME/.$file
+	oldpath=$(readlink $link 2>/dev/null || echo .none)
+	newpath=".zsh/$file"
+	[[ $oldpath == $newpath ]] && continue
+	[[ -e $link ]] && mv $link $link-old.$now
+	echo ln -sf $newpath $link
+	ln -sf $newpath $link
 done
 
-# Install zplugin
+# Install/update zplugin
 declare -r zplugin_install=https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh
-sh -c "$(curl -fsSL )"
+sh -c "$(curl -fsSL $zplugin_install)"
 
