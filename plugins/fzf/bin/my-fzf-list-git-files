@@ -5,9 +5,11 @@ git_relative=$(python -c "import os.path; print os.path.relpath('$git_top', '$PW
 
 {
 	git ls-files --modified                                 | sed 's/^/(modified)    /'
+	git ls-files                                            | sed 's/^/(git-file)    /'
 	git ls-files --exclude-standard --others                | sed 's/^/(untracked)   /'
 	git ls-files --exclude-standard --ignored               | sed 's/^/(ignored)     /'
 	git ls-files --modified $git_relative                   | sed 's/^/(modified)    /'
+	git ls-files $git_relative                              | sed 's/^/(git-file)    /'
 	git ls-files --exclude-standard --others $git_relative  | sed 's/^/(untracked)   /'
 	git ls-files --exclude-standard --ignored $git_relative | sed 's/^/(ignored)     /'
 

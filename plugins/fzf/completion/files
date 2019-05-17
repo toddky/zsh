@@ -2,9 +2,10 @@
 
 args=($(printf "%s\n" $@))
 [[ "$@" == "${@% }" ]] && query=${args[${#args[@]}-1]}
+[[ -d $query ]] && { init_dir=$query; query=''; }
 
 result=($({
-	my-fzf-list-files-shallow-first &
+	my-fzf-list-files-shallow-first $init_dir &
 	my-fzf-list-git-files
 } | grep -v '(directory)' | my-fzf-file $query))
 ret=$?
