@@ -37,15 +37,15 @@ fi
 # ==============================================================================
 if [[ $cmd =~ add|diff ]]; then
 	result=($({
-		my-fzf-helper-git-files
+		my-fzf-list-git-files
 	} | my-fzf-git-diff '!ignore'))
 	ret=$?
 	args+=(${result[1]})
 
 else
-	result=$({
-		my-fzf-helper-files-shallow-first
-	} | my-fzf-40)
+	result=($({
+		my-fzf-list-files-shallow-first
+	} | my-fzf-git-diff))
 	ret=$?
 	args+=(${result[1]})
 fi

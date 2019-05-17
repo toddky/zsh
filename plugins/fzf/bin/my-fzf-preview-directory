@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+dir=$(echo $@ | awk '{print $NF}')
+[[ -d $dir ]] || { echo "Directory '$dir' does not exist"; exit 2; }
+ls -ldh  --color=always $(readlink -f $dir)
+echo
+ls -lrth --color=always $dir | tail

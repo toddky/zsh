@@ -4,5 +4,5 @@ eval exec fzf \
 	--tiebreak=index \
 	--reverse \
 	--preview-window down:80% \
-	--preview "'my-fzf-helper-git-diff {}'" \
+	--preview "'my-fzf-list-git-diff {}'" \
 	--query="'$@ '"

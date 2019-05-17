@@ -6,8 +6,7 @@ cmd=${args[0]}
 
 result=($({
 	my-fzf-list-files-shallow-first
-	my-fzf-list-git-files
-} | grep -v '(directory)' | my-fzf-file))
+} | grep '(directory)' | my-fzf-directory))
 ret=$?
 
 [[ $ret -ne 0 ]] && exit $ret

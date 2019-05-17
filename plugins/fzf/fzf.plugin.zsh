@@ -91,16 +91,6 @@ function fzf-magic-complete() {
 		ret=$?
 		[[ $ret == 0 ]] && LBUFFER=$result
 
-	# Directory completion for `cd`
-	elif [[ $LBUFFER =~ '^\s*cd\b' ]]; then
-		if [[ -n $query ]]; then
-			LBUFFER="${LBUFFER% *} $(fzf-dirs | my-fzf-exact-40)"
-		else
-			LBUFFER="${LBUFFER% *} $({fzf-gitdirs & fzf-dirs} | my-fzf-exact-40)"
-		fi
-		ret=$?
-		[[ $ret == 0 ]] && accept=1
-
 	# SSH completion
 	elif [[ $LBUFFER =~ '^\s*ssh\b' ]]; then
 		LBUFFER="${LBUFFER% *} $(fzf-hosts | my-fzf-exact-40)"

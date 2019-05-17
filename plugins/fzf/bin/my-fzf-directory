@@ -3,6 +3,6 @@ eval exec fzf \
 	--height 80% \
 	--tiebreak=index \
 	--reverse \
-	--preview-window down:80% \
-	--preview "'my-fzf-preview-file {}'" \
+	--preview-window bottom:50% \
+	--preview "'my-fzf-preview-directory {}'" \
 	--query="'$@ '"
