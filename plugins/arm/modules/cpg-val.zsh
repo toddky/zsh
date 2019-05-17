@@ -10,8 +10,13 @@ alias deimos-sh="$here/cpg-sh.expect deimos"
 alias zeus-sh="$here/cpg-sh.expect zeus"
 
 # Zeus module
-alias -g zeusmodule='$(git rev-parse --show-toplevel)/tools/modules/zeus_trial'
-alias zeusload='module load zeusmodule'
+function zeusload() {
+	if [[ -n $PROJ_HOME ]]; then
+		module load $PROJ_HOME/tools/modules/zeus_trial
+	else
+		module load $(git rev-parse --show-toplevel)/tools/modules/zeus_trial
+	fi
+}
 
 # Rosetta
 function _detag_rosetta() {
