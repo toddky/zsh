@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 file=$(echo $@ | awk '{print $NF}')
-git diff --color=always $file
-git ls-files --error-unmatch $file 2>/dev/null && exit 0
-
 echo -e "\e[33m==> $file <==\e[0m"
 head -n 50 $file
 echo -e "\e[33m==> end of preview <==\e[0m"
-

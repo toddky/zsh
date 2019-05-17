@@ -35,20 +35,12 @@ fi
 # ==============================================================================
 # SPECIFIC COMMANDS
 # ==============================================================================
-git_top=$(git rev-parse --show-toplevel)
-git_relative=$(python -c "import os.path; print os.path.relpath('$git_top', '$PWD')")
-
 if [[ $cmd =~ add|diff ]]; then
 	result=($({
 		my-fzf-helper-git-files
 	} | my-fzf-git-diff '!ignore'))
 	ret=$?
 	args+=(${result[1]})
-
-elif [[ $cmd == 'diff' ]]; then
-	result=$(git ls-files --modified | my-fzf-40)
-	ret=$?
-	args+=($result)
 
 else
 	result=$({
