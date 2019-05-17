@@ -7,13 +7,8 @@ echo "(git-top) $git_top/"
 echo "(git-top) $git_relative/"
 
 while read tag file; do
-	echo "$tag $(dirname $file)/"
+	echo "$tag $(dirname $file)/" | sed 's/(git-file)/(git-dir)/'
 done < <(
-	git ls-files --modified                                 | sed 's/^/(modified)    /'
-	git ls-files --exclude-standard --others                | sed 's/^/(untracked)   /'
-	git ls-files --exclude-standard --ignored               | sed 's/^/(ignored)     /'
-	git ls-files --modified $git_relative                   | sed 's/^/(modified)    /'
-	git ls-files --exclude-standard --others $git_relative  | sed 's/^/(untracked)   /'
-	git ls-files --exclude-standard --ignored $git_relative | sed 's/^/(ignored)     /'
+	my-fzf-list-git-files
 ) | awk '!count[$2]++'
 

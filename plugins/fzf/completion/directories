@@ -3,10 +3,7 @@
 args=($(printf "%s\n" $@))
 [[ "$@" == "${@% }" ]] && query=${args[${#args[@]}-1]}
 
-result=($({
-	my-fzf-list-files-shallow-first | grep '(directory)' &
-	my-fzf-list-git-dirs
-} | my-fzf-dir $query))
+result=($(my-fzf-list-dirs | my-fzf-dir $query))
 ret=$?
 
 [[ $ret -ne 0 ]] && exit $ret
