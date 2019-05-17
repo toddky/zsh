@@ -42,6 +42,7 @@ load-once python/git-review_py2.7.8/1.25.0
 load-once apache/subversion/1.9.4
 
 # --- Scripting Modules ---
+load-once nodejs/node/9.8.0
 load-once perl/perl/5.12.3
 load-once python/python/2.7.8
 load-once python/python/3.5.1
@@ -50,6 +51,7 @@ load-once ruby/gems/2.6.11
 load-once tct/tcl/8.6.1
 
 # --- Tools ---
+load-once exuberant/ctags/5.8
 load-once colordiff/colordiff
 load-once gnu/emacs/26.1
 load-once fish/fish-shell/2.7.0
