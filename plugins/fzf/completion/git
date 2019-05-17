@@ -3,7 +3,7 @@
 args=($(printf "%s\n" $@))
 args[0]=git
 cmd=${args[1]}
-[[ "$@" != "${@% }" ]] && trail=1
+[[ "$@" == "${@% }" ]] && query=${args[${#args[@]}-1]}
 
 # ==============================================================================
 # LIST ALL COMMANDS
@@ -19,7 +19,7 @@ if [[ -z $cmd ]]; then
 	ret=$?
 
 # Check for command tab complete
-elif [[ -z ${args[2]} && -z $trail ]]; then
+elif [[ -z ${args[2]} && -n $query ]]; then
 	result=($(all_commands | my-fzf-40 $cmd))
 	ret=$?
 fi

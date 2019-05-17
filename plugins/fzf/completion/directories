@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
 args=($(printf "%s\n" $@))
-cmd=${args[0]}
-[[ "$@" != "${@% }" ]] && trail=1
+[[ "$@" == "${@% }" ]] && query=${args[${#args[@]}-1]}
 
 result=($({
 	my-fzf-list-files-shallow-first | grep '(directory)' &
 	my-fzf-list-git-dirs
-} | my-fzf-dir))
+} | my-fzf-dir $query))
 ret=$?
 
 [[ $ret -ne 0 ]] && exit $ret
