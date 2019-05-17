@@ -16,7 +16,9 @@ alias vman='vim -c MANPAGER -'
 alias vmin='vim --noplugin'
 alias vnone='vim -u NONE'
 alias vdiff='vimdiff'
+alias vs='vim -S'
 alias vsource='vim -S'
+alias vall="vim -c 'tab sball'"
 
 
 # --- Functions ---
