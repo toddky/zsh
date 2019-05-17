@@ -37,5 +37,5 @@ function _set-title() {
 function _prompt-git-version() {
 	git -C $here log -1 --format=%H 2>/dev/null || echo none
 }
-_prompt_git_version=$(_prompt-git-version)
+_prompt_git_version=$(_prompt-git-version || echo fail)
 
