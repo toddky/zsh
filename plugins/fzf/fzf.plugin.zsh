@@ -98,8 +98,9 @@ function fzf-magic-complete() {
 
 	# File completion
 	else
-		LBUFFER=$($FZF_COMPLETION_DIR/files)
+		result=$($FZF_COMPLETION_DIR/files $LBUFFER)
 		ret=$?
+		[[ $ret == 0 ]] && LBUFFER=$result
 	fi
 
 	zle redisplay

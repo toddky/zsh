@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
 args=($(printf "%s\n" $@))
-cmd=${args[0]}
 [[ "$@" != "${@% }" ]] && trail=1
 
 result=($({
-	my-fzf-list-files-shallow-first
+	my-fzf-list-files-shallow-first &
 	my-fzf-list-git-files
 } | grep -v '(directory)' | my-fzf-file))
 ret=$?

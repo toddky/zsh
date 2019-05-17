@@ -5,8 +5,9 @@ cmd=${args[0]}
 [[ "$@" != "${@% }" ]] && trail=1
 
 result=($({
-	my-fzf-list-files-shallow-first
-} | grep '(directory)' | my-fzf-directory))
+	my-fzf-list-files-shallow-first | grep '(directory)' &
+	my-fzf-list-git-dirs
+} | my-fzf-dir))
 ret=$?
 
 [[ $ret -ne 0 ]] && exit $ret
