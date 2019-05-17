@@ -40,40 +40,12 @@ bindkey -M viins '^F' my-fzf-search
 # FUNCTIONS
 # ==============================================================================
 
-# List Git files
-function fzf-gitfiles() {
-	[[ -d $GIT_TOP ]] || return 0
-	git -C $GIT_TOP ls-files | sed -e 's/^/$GIT_TOP\//'
-}
-
-
 # List Git directories
 function fzf-gitdirs() {
 	[[ -d $GIT_TOP ]] || return 0
 	# This is too slow for large directories
 	#fzf-gitfiles | xargs -n 1 dirname | uniq
 	git -C $GIT_TOP ls-files | sed -e 's/^/$GIT_TOP\//' -e 's/\/[^/]*$//' | awk '!count[$0]++'
-}
-
-
-# Recrusively list files, shallow first
-function fzf-files() {
-	local dir file here=${1-.}
-	local -U dirs
-	dirs=($here)
-
-	# For each directory
-	while (( ${#dirs} != 0 )); do
-		dir=$dirs[1]
-		dirs[1]=()
-
-		# For each file
-		for file in $(\ls $dir); do
-			entry=$dir/$file
-			[[ -f $entry ]] && echo ${entry#./}
-			[[ -d $entry ]] && dirs+=($entry)
-		done
-	done
 }
 
 
@@ -136,11 +108,7 @@ function fzf-magic-complete() {
 
 	# File completion
 	else
-		if [[ -n $query ]]; then
-			LBUFFER="${LBUFFER% *} $(fzf-files | my-fzf-exact-40)"
-		else
-			LBUFFER="${LBUFFER% *} $({fzf-gitfiles & fzf-files} | my-fzf-exact-40)"
-		fi
+		LBUFFER=$($FZF_COMPLETION_DIR/files)
 		ret=$?
 	fi
 
