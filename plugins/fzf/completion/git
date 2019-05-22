@@ -42,6 +42,13 @@ if [[ $cmd =~ add|diff ]]; then
 	ret=$?
 	args+=(${result[1]})
 
+elif [[ $cmd =~ show ]]; then
+	result=($({
+		my-fzf-list-git-log $PWD
+	} | my-fzf-git-hash))
+	ret=$?
+	args+=(${result[0]})
+
 else
 	result=($({
 		my-fzf-list-files-shallow-first

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+eval exec fzf \
+	--height 99% \
+	--tiebreak=index \
+	--reverse \
+	--preview-window down:20% \
+	--preview "'my-fzf-preview-git-hash {}'" \
+	--query="'$@ '"
