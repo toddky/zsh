@@ -13,9 +13,15 @@ alias bcmd='bprint cmd'
 alias bpwd='bprint sub_cwd'
 alias bapp='bprint app'
 alias bdepend='bprint dependency'
-alias bremain='bprint time_left'
+alias bleft='bprint time_left'
 alias bjobsf='bprint "user:8 project:9 run_time:-20 cmd"'
 alias bemu='bjobsf -q emulation -u all'
+
+# If running in LSF environment
+if [[ -n $LSB_BATCH_JID ]]; then
+	alias bstat="bjobsu $LSB_BATCH_JID"
+	alias bleft="bjobs -noheader -o time_left $LSB_BATCH_JID"
+fi
 
 # Long output
 alias bawk='awk '"'"'BEGIN{RS=", +|;?\n"}{$1=$1;print}'"'"''
