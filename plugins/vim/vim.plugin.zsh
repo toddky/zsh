@@ -3,25 +3,32 @@ local here=${0:h}
 source $here/suffix.zsh
 source $here/server.zsh
 
-
-# --- Environment Variables ---
+# ==============================================================================
+# ENVIRONMENT
+# ==============================================================================
 export EDITOR=vim
 export MANPAGER="vim -c MANPAGER -"
 
 
-# --- Aliases ---
+# ==============================================================================
+# ALIASES
+# ==============================================================================
 alias vi=vim
 alias vless="col -b | vim -c 'set ts=8 nomod nolist' -"
 alias vman='vim -c MANPAGER -'
 alias vmin='vim --noplugin'
 alias vnone='vim -u NONE'
 alias vdiff='vimdiff'
-alias vs='vim -S'
-alias vsource='vim -S'
 alias vall="vim -c 'tab sball'"
 
 
-# --- Functions ---
+# ==============================================================================
+# FUNCTIONS
+# ==============================================================================
+
+function vsource() { vim -S $@; }
+function vs()      { vim -S $@; }
+
 function vhelp() {
 	vim +"help $@ | only"
 }
@@ -54,4 +61,13 @@ function vtfind() {
 function vimscripts() {
 	vim -c ':set t_ti= t_te= nomore' -c scriptnames -c q
 }
+
+
+# ==============================================================================
+# COMPDEF
+# ==============================================================================
+function _source_vim() {
+	_arguments "*:files:(($(ls *.vim)))"
+}
+compdef _source_vim vs vsource
 
