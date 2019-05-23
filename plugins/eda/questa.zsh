@@ -51,10 +51,21 @@ function pdb_report() {
 
 # Grade a .ucdb file with a .do file
 function my_fcovgrade() {
-	which vsim || return 1
+	which vsim > /dev/null || return 1
 	local dofile=$1 ucdb=$2 graded
+
 	graded=$(dirname $ucdb)/$(basename $ucdb .ucdb).graded.ucdb
-	vsim -c -do "coverage open $ucdb; source $dofile; coverage save $graded; quit -f"
+	[[ -f $graded ]] || vsim -c -do "coverage open $ucdb; source $dofile; coverage save $graded; quit -f"
+
+	echo "\n<<< Results >>>"
+	vcover report $graded -detail -cvg -hidecvginsts -flat | awk '
+		/CVG/ {total++}
+		($2==0) {missed++}
+		END {
+			hit = total - missed
+			print "Hit/Total = ", hit"/"total, "("100*hit/total"%)"
+		}
+	'
 }
 
 
