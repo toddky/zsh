@@ -4,14 +4,18 @@ alias questaloadold='mload mentor/questasim/10.7_1'
 alias questaload='mload mentor/questasim/2019.1_1'
 
 
-# --- Aliases ---
+# ==============================================================================
+# ALIASES
+# ==============================================================================
 alias ucdb_report_parse="awk '/^\s*CLASS/{class=\$2} \
 /^\s*TYPE/{type=\$2} \
 /^\s*Coverpoint/{coverpoint=\$2} \
 /^\s*bin/{print class,type,coverpoint,\$2,\$3,\$4,\$5}'"
 
 
-# --- Functions ---
+# ==============================================================================
+# FUNCTIONS
+# ==============================================================================
 
 # Dump and parse UCDB file into one-liners
 function ucdb_dump() {
@@ -45,8 +49,18 @@ function pdb_report() {
 	vsim -64 -c -do "profile open $pdb; profile report -file $pdb.log; quit -f"
 }
 
+# Grade a .ucdb file with a .do file
+function my_fcovgrade() {
+	which vsim || return 1
+	local dofile=$1 ucdb=$2 graded
+	graded=$(dirname $ucdb)/$(basename $ucdb .ucdb).graded.ucdb
+	vsim -c -do "coverage open $ucdb; source $dofile; coverage save $graded; quit -f"
+}
 
-# --- compdef ---
+
+# ==============================================================================
+# COMPDEF
+# ==============================================================================
 
 # Completion for *.ucdb files
 function _ucdb_file() {
