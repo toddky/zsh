@@ -3,6 +3,9 @@
 # SYMBOLS
 # ==============================================================================
 
+# Find more on Wikibooks:
+# https://en.wikibooks.org/wiki/Unicode/List_of_useful_symbols
+
 _ZSH_PROMPT=❱
 _ZSH_LEFT_SEPARATOR=
 _ZSH_RIGHT_SEPARATOR=
