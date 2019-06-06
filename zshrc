@@ -4,7 +4,7 @@
 # --- oh-my-zsh ---
 export ZSH=$HOME/.oh-my-zsh
 export SHELL=$(builtin which zsh)
-export ZSH_CUSTOM=$HOME/.zsh/custom
+export ZSH_CUSTOM=$HOME/.zsh
 
 DISABLE_AUTO_TITLE=true
 COMPLETION_WAITING_DOTS="true"
