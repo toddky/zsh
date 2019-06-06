@@ -16,7 +16,7 @@ if [[ ! -d $ZPLG_HOME/bin/.git ]]; then
 fi
 
 # --- Load zplugin ---
-source $HOME/.zplugin/bin/zplugin.zsh 2>/dev/null || return
+source $HOME/.zplugin/bin/zplugin.zsh
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
 
@@ -27,6 +27,9 @@ autoload -Uz _zplugin
 
 #zplugin ice wait'!0'
 #zplugin load $ZSH/modules
+
+zplugin ice wait'!0'
+zplugin load zsh-users/zsh-completions
 
 zplugin ice wait'!0'
 zplugin load zsh-users/zsh-syntax-highlighting
