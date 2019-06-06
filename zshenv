@@ -17,7 +17,7 @@ stty -ixon 2>/dev/null
 
 # --- Run Latest zsh ---
 # This is a stupid hack that will probably break and cause infinite recursion
-if [[ -d /arm/tools/ ]]; then
+if [[ -n $PROMPT && -d /arm/tools/ ]]; then
 	PATH=/arm/tools/zsh/zsh/5.0.2/rhe6-x86_64/bin:$PATH
 	if [[ $ZSH_VERSION != $(zsh --version | cut -d' ' -f 2) ]]; then
 		exec zsh
