@@ -34,6 +34,11 @@ function source_files() {
 	done
 }
 
+#setopt XTRACE
+#setopt VERBOSE
+
+#setopt SOURCE_TRACE
+
 #function source() {
 #	local start_ms=$(date +%s%3N)
 #	builtin source $1
@@ -41,4 +46,6 @@ function source_files() {
 #}
 
 source $ZSH/oh-my-zsh.sh
+
+source $HOME/.zsh/zplugin
 

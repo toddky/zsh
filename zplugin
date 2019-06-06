@@ -1,0 +1,22 @@
+
+# vim: ft=zsh
+# ==============================================================================
+# ZPLUGIN
+# ==============================================================================
+ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
+[[ -d $ZPLG_HOME ]] || mkdir -p $ZPLG_HOME
+
+if [[ ! -d $ZPLG_HOME/bin/.git ]]; then
+    git clone --depth 10 https://github.com/zdharma/zplugin.git $ZPLG_HOME/bin
+fi
+
+source $HOME/.zplugin/bin/zplugin.zsh
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+
+#zplugin ice wait'!0'
+#zplugin load $ZSH/modules
+
+zplugin ice wait'!0'
+zplugin load zsh-users/zsh-syntax-highlighting
+

@@ -32,7 +32,3 @@ for file in zlogin zprofile zshenv zshrc; do
 	ln -sf $newpath $link
 done
 
-# Install/update zplugin
-declare -r zplugin_install=https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh
-sh -c "$(curl -fsSL $zplugin_install)"
-
