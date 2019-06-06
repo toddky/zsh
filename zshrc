@@ -45,6 +45,7 @@ function source_files() {
 #	echo "$(($(date +%s%3N)-$start_ms)) $1"
 #}
 
+export ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
 source $HOME/.zsh/zplugin

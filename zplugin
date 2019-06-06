@@ -1,18 +1,29 @@
 
 # vim: ft=zsh
+
 # ==============================================================================
 # ZPLUGIN
 # ==============================================================================
+
+# --- Check zsh Version ---
+[[ $ZSH_VERSION < 5 ]] && return
+
+# --- Setup zplugin ---
 ZPLG_HOME="${ZDOTDIR:-$HOME}/.zplugin"
 [[ -d $ZPLG_HOME ]] || mkdir -p $ZPLG_HOME
-
 if [[ ! -d $ZPLG_HOME/bin/.git ]]; then
     git clone --depth 10 https://github.com/zdharma/zplugin.git $ZPLG_HOME/bin
 fi
 
-source $HOME/.zplugin/bin/zplugin.zsh
+# --- Load zplugin ---
+source $HOME/.zplugin/bin/zplugin.zsh 2>/dev/null || return
 autoload -Uz _zplugin
 (( ${+_comps} )) && _comps[zplugin]=_zplugin
+
+
+# ==============================================================================
+# PLUGINS
+# ==============================================================================
 
 #zplugin ice wait'!0'
 #zplugin load $ZSH/modules
