@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+args=($(printf "%s\n" $@))
+args[0]=module
+cmd=${args[1]}
+[[ "$@" == "${@% }" ]] && query=${args[${#args[@]}-1]}
+
+# ==============================================================================
+# LIST ALL COMMANDS
+# ==============================================================================
+function all_commands() {
+	echo -e "list\nload\nunload"
+}
+
+# Check if command empty
+if [[ -z $cmd ]]; then
+	result=($(all_commands | my-fzf-40))
+	ret=$?
+
+# Check for command tab complete
+elif [[ -z ${args[2]} && -n $query ]]; then
+	result=($(all_commands | my-fzf-40 $cmd))
+	ret=$?
+fi
+
+# Return results (if available)
+if [[ -n $ret ]]; then
+	[[ $ret -ne 0 ]] && exit $ret
+	echo "module ${result[0]} "
+	exit 0
+fi
+
+
+# ==============================================================================
+# SPECIFIC COMMANDS
+# ==============================================================================
+
+function module() {
+	eval `/arm/tools/tct/tcl/8.5.2/rhe6-x86_64/bin/tclsh /arm/tools/setup/lib/modulecmd.tcl bash $*`
+}
+
+if [[ $cmd =~ load ]]; then
+	result=($({
+		/arm/tools/setup/bin/mgrep 2>/dev/null
+	} | fzf --height 40% --tac --reverse --tiebreak=index))
+	ret=$?
+	args+=(${result[0]})
+
+elif [[ $cmd =~ unload ]]; then
+	result=($({
+		module list |& awk '/\// {print $2}'
+	} | my-fzf-40))
+	ret=$?
+	args+=(${result[0]})
+
+fi
+
+# Return result
+[[ $ret -ne 0 ]] && exit $ret
+echo "${args[@]} "
+
