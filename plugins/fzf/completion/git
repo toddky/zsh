@@ -42,7 +42,7 @@ if [[ $cmd =~ add|diff ]]; then
 	ret=$?
 	args+=(${result[1]})
 
-elif [[ $cmd =~ show ]]; then
+elif [[ $cmd =~ show|revert ]]; then
 	result=($({
 		my-fzf-list-git-log $PWD
 	} | my-fzf-git-hash))
