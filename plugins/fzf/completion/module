@@ -35,24 +35,21 @@ fi
 # SPECIFIC COMMANDS
 # ==============================================================================
 
-function module() {
-	eval `/arm/tools/tct/tcl/8.5.2/rhe6-x86_64/bin/tclsh /arm/tools/setup/lib/modulecmd.tcl bash $*`
-}
+modulecmd='/arm/tools/tct/tcl/8.5.2/rhe6-x86_64/bin/tclsh /arm/tools/setup/lib/modulecmd.tcl bash'
 
-if [[ $cmd =~ load ]]; then
+if [[ $cmd =~ unload ]]; then
+	result=($({
+		eval $modulecmd list |& awk '/\// {print $2}'
+	} | fzf --height 40% --tac --reverse --tiebreak=index --preview-window=right:60% --preview="$modulecmd show {1}"))
+	ret=$?
+	args+=(${result[0]})
+
+elif [[ $cmd =~ load ]]; then
 	result=($({
 		/arm/tools/setup/bin/mgrep 2>/dev/null
-	} | fzf --height 40% --tac --reverse --tiebreak=index))
+	} | fzf --height 40% --tac --reverse --tiebreak=index --preview-window=right:60% --preview="$modulecmd show {1}"))
 	ret=$?
 	args+=(${result[0]})
-
-elif [[ $cmd =~ unload ]]; then
-	result=($({
-		module list |& awk '/\// {print $2}'
-	} | my-fzf-40))
-	ret=$?
-	args+=(${result[0]})
-
 fi
 
 # Return result
