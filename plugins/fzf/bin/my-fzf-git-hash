@@ -4,5 +4,5 @@ eval exec fzf \
 	--tiebreak=index \
 	--reverse \
 	--preview-window down:20% \
-	--preview "'my-fzf-preview-git-hash {}'" \
+	--preview "'git show --color=always --numstat {1}'" \
 	--query="'$@ '"
