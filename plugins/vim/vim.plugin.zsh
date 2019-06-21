@@ -20,6 +20,7 @@ alias vmin='vim --noplugin'
 alias vnone='vim -u NONE'
 alias vdiff='vimdiff'
 alias vall="vim -c 'tab sball'"
+alias vwiki='vim +VimwikiIndex'
 
 
 # ==============================================================================
