@@ -7,7 +7,7 @@ local here=${0:h}
 #alias tmux='tmux -2'
 
 # Save/Restore Session
-alias tsave="$here/tsave.zsh"
+alias tsave="tmux list-sessions -F '#{session_name}' | xargs -n 1 $HOME/.tmux/bin/save-session.bash"
 function trestore() { echo tmux source-file $1; }
 
 # Print Information
