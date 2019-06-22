@@ -22,7 +22,7 @@
 # - Agents quits after one hour if not set
 # - Agent never quits if set to 0
 # - Agent quits after number of seconds if set
-LPASS_AGENT_TIMEOUT=0
+export LPASS_AGENT_TIMEOUT=0
 
 # The agent is disabled if $LPASS_AGENT_DISABLE is set to 1
 unset LPASS_AGENT_DISABLE
@@ -33,6 +33,9 @@ unset LPASS_AGENT_DISABLE
 # - putclip on Cygwin.
 # Clipboard command an be overridden by $LPASS_CLIPBOARD_COMMAND
 unset LPASS_CLIPBOARD_COMMAND
+
+# Use CLI to enter password
+export LPASS_DISABLE_PINENTRY=1
 
 
 # --- Aliases ---
@@ -86,7 +89,12 @@ function lpf() {
 	# Print site information and copy password
 	if (( $? == 0 )); then
 		id=$selected[1]
-		lpass show --url $id
+		#read -r username password <<< $(lpass show $id | awk '
+			#$1~/Username:/{user=$2}
+			#$2~/Password:/{pw=$2}
+			#END{print user, pw}
+		#')
+		#lpass show --url $id
 		echo "Username: $selected[2]"
 		lpass show --password $id | xclip
 		#lpass show --clip --password $id
