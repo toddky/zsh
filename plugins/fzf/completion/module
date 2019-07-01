@@ -6,20 +6,28 @@ cmd=${args[1]}
 [[ "$@" == "${@% }" ]] && query=${args[${#args[@]}-1]}
 
 # ==============================================================================
+# FZF
+# ==============================================================================
+modulecmd='/arm/tools/tct/tcl/8.5.2/rhe6-x86_64/bin/tclsh /arm/tools/setup/lib/modulecmd.tcl bash'
+function fzf-module-show() {
+	fzf --height 80% --reverse --tiebreak=index --preview-window=right:60% --preview="$modulecmd show {1}" $@
+}
+
+# ==============================================================================
 # LIST ALL COMMANDS
 # ==============================================================================
-function all_commands() {
+function module-commands() {
 	echo -e "list\nload\nunload"
 }
 
 # Check if command empty
 if [[ -z $cmd ]]; then
-	result=($(all_commands | my-fzf-40))
+	result=($(module-commands | my-fzf-40))
 	ret=$?
 
 # Check for command tab complete
 elif [[ -z ${args[2]} && -n $query ]]; then
-	result=($(all_commands | my-fzf-40 $cmd))
+	result=($(module-commands | my-fzf-40 $cmd))
 	ret=$?
 fi
 
@@ -35,11 +43,6 @@ fi
 # SPECIFIC COMMANDS
 # ==============================================================================
 
-modulecmd='/arm/tools/tct/tcl/8.5.2/rhe6-x86_64/bin/tclsh /arm/tools/setup/lib/modulecmd.tcl bash'
-function fzf-module-show() {
-	fzf --height 80% --tac --reverse --tiebreak=index --preview-window=right:60% --preview="$modulecmd show {1}"
-}
-
 if [[ $cmd =~ unload ]]; then
 	result=($({
 		eval $modulecmd list |& awk '/\// {print $2}'
@@ -50,6 +53,7 @@ if [[ $cmd =~ unload ]]; then
 elif [[ $cmd =~ show ]]; then
 	result=($({
 		eval $modulecmd list |& awk '/\// {print $2}'
+		/arm/tools/setup/bin/mgrep 2>/dev/null
 	} | fzf-module-show))
 	ret=$?
 	args+=(${result[0]})
@@ -57,7 +61,7 @@ elif [[ $cmd =~ show ]]; then
 elif [[ $cmd =~ load ]]; then
 	result=($({
 		/arm/tools/setup/bin/mgrep 2>/dev/null
-	} | fzf-module-show))
+	} | fzf-module-show --tac))
 	ret=$?
 	args+=(${result[0]})
 fi
