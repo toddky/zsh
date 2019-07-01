@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Inspiration:
+# https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236
+
 args=($(printf "%s\n" $@))
 args[0]=git
 cmd=${args[1]}
@@ -8,19 +11,19 @@ cmd=${args[1]}
 # ==============================================================================
 # LIST ALL COMMANDS
 # ==============================================================================
-function all_commands() {
+function git-commands() {
 	printf "%s\n" $(git help --all | grep '^ \+\w')
 	git config --list | sed -n 's/^alias\.\([^=]\+\)=\(.*\)/\1 (alias for \2)/p'
 }
 
 # Check if command empty
 if [[ -z $cmd ]]; then
-	result=($(all_commands | my-fzf-40))
+	result=($(git-commands | my-fzf-40))
 	ret=$?
 
 # Check for command tab complete
 elif [[ -z ${args[2]} && -n $query ]]; then
-	result=($(all_commands | my-fzf-40 $cmd))
+	result=($(git-commands | my-fzf-40 $cmd))
 	ret=$?
 fi
 
@@ -46,6 +49,13 @@ elif [[ $cmd =~ show|revert ]]; then
 	result=($({
 		my-fzf-list-git-log $PWD
 	} | my-fzf-git-hash))
+	ret=$?
+	args+=(${result[0]})
+
+elif [[ $cmd =~ bco ]]; then
+	result=($({
+		git branch -vv -a
+	} | my-fzf-40))
 	ret=$?
 	args+=(${result[0]})
 
