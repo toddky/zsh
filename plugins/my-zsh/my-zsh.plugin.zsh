@@ -36,8 +36,8 @@ alias -g 2out='2>&1'
 alias -g P='|&'
 
 # --- Time ---
-function now() { date +%y%m%d-%H%M%S-Week%U-%a-%T; }
-alias week="date +%U"
+function now() { date +%y%m%d-%H%M%S-Week%V-%a-%T; }
+alias week="date +%V"
 
 # --- General ---
 alias func='print -l ${(ok)functions}'
