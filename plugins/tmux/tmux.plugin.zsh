@@ -61,12 +61,21 @@ function tnew() {
 	ts "$name"
 }
 
-# Search for tmux pane using pid
+# Search for pane using PID
 function tps() {
 	local pid=${1?pid undefined} pane_id
 	pane_id=$(ps hew $pid | sed 's/^.*TMUX_PANE=\(%[0-9]\+\).*/\1/')
 	tmux display-message -t $pane_id -p '#{session_name}.#{window_index}.#{pane_index} #{pane_id}'
 }
+
+# Search for pane using PID
+function tpid() {
+	local pid=${1?pid not defined} pane_id
+	pane=$(strings /proc/$pid/environ | grep TMUX_PANE)
+	pane_id=${pane#*=}
+	tmux display-message -t $pane_id -p "#{session_name}:#{window_index}"
+}
+
 
 # TODO: Implement this function
 # Figure out how tmux-fingers seemlessly swaps panes
