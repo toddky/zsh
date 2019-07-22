@@ -10,3 +10,8 @@ alias 755='chmod -R 755'
 alias 775='chmod -R 775'
 alias 777='chmod -R 777'
 
+function chmod-burst() {
+	chmod -R o-rwx $@
+	chown -R ${USER}:svos_burst $@
+}
+
