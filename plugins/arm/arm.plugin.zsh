@@ -1,7 +1,10 @@
 
+# --- Source Files ---
 local here=${0:h}
 source $here/zsh-setup.zsh
-source_files $here/modules/*.zsh
+for sourcefile in $here/modules/*.zsh; do
+	source $sourcefile
+done
 
 # --- Site ---
 alias sitename="hostname -f | sed 's/.*\.\([^.]\+\)\.arm\.com/\1/'"

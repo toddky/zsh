@@ -3,7 +3,10 @@
 local here=${0:h}
 source $here/my-options.zsh
 source $here/my-builtins.zsh
-source_files $here/alias/*.zsh
+for sourcefile in $here/alias/*.zsh; do
+	source $sourcefile
+done
+
 
 # --- Path ---
 function addpath() { export PATH=$PATH:$1; }

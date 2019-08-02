@@ -27,13 +27,6 @@ plugins+=(bin modules my-zsh cd vim xclip tmux vi-mode regex math setup git svn 
 [[ -f ~/.fzf.zsh ]] && plugins+=(fzf)
 plugins+=(history-substring-search)
 
-# --- Source Files ---
-function source_files() {
-	for f in $(command ls $@); do
-		source $f
-	done
-}
-
 #setopt XTRACE
 #setopt VERBOSE
 
