@@ -24,9 +24,15 @@ autoload -Uz _zplugin
 # ==============================================================================
 # PLUGINS
 # ==============================================================================
+# Ranked plugins with over 100 commits
+# https://github.com/zdharma/Zsh-100-Commits-Club
 
 #zplugin ice wait'!0'
 #zplugin load $ZSH/modules
+
+# TODO: Add this to my theme
+#zplugin ice wait'!0'
+#zplugin load romkatv/gitstatus
 
 zplugin ice wait'!0'
 zplugin load zsh-users/zsh-completions
