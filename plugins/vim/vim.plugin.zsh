@@ -30,6 +30,10 @@ alias vwiki='vim +VimwikiIndex'
 function vsource() { vim -S $@; }
 function vs()      { vim -S $@; }
 
+function vburst() {
+	strings $1 | vim -c 'set syntax=burstlog' -
+}
+
 function vhelp() {
 	vim +"help $@ | only"
 }
