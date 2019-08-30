@@ -31,7 +31,12 @@ function vsource() { vim -S $@; }
 function vs()      { vim -S $@; }
 
 function vburst() {
-	strings $1 | vim -c 'set syntax=burstlog' -
+	local uart=${1?}
+	if [[ "$(file $uart)" =~ ' LF ' ]]; then
+		strings $uart | vim -c 'set syntax=burstlog' -
+	else
+		vim -c 'set syntax=burstlog' $uart
+	fi
 }
 
 function vhelp() {
