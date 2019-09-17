@@ -55,3 +55,15 @@ function login-stat-euhpc() {
 	) | column -t | sort -n -k 11
 }
 
+function login-stat-euhpc2() {
+	(
+		ssh-uptime login1.euhpc2.arm.com &
+		ssh-uptime login2.euhpc2.arm.com &
+		ssh-uptime login4.euhpc2.arm.com &
+		ssh-uptime login5.euhpc2.arm.com &
+		ssh-uptime login6.euhpc2.arm.com &
+		ssh-uptime login7.euhpc2.arm.com &
+		wait
+	) | column -t | sort -n -k 11
+}
+
