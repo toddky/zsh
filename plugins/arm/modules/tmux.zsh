@@ -26,3 +26,19 @@ function twindow-ssh-nahpc2() {
 	tmux select-layout tiled
 }
 
+function twindow-ssh-euhpc() {
+	tmux new-window -n "euhpc" ssh login1.euhpc.arm.com
+	tsplit-ssh login2.euhpc.arm.com
+	tsplit-ssh login3.euhpc.arm.com
+	tsplit-ssh login4.euhpc.arm.com
+	tsplit-ssh login5.euhpc.arm.com
+	tsplit-ssh login6.euhpc.arm.com
+	tsplit-ssh login7.euhpc.arm.com
+	tsplit-ssh login8.euhpc.arm.com
+	tsplit-ssh login9.euhpc.arm.com
+	tsplit-ssh login10.euhpc.arm.com
+	tsplit-ssh login11.euhpc.arm.com
+	tsplit-ssh login12.euhpc.arm.com
+	tmux select-layout tiled
+}
+
