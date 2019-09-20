@@ -6,3 +6,5 @@ alias vncnew='vncserver -geometry 1920x1015'
 # --- vncconfig ---
 alias vncconfig='vncconfig -nowin &'
 
+alias vncresize=xrandr
+
