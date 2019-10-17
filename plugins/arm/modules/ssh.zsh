@@ -38,6 +38,20 @@ function login-stat-nahpc2() {
 	) | column -t | sort -n -k 11
 }
 
+function login-stat-nasce() {
+	(
+		ssh-uptime login1.sce01.na02.arm.com &
+		ssh-uptime login2.sce01.na02.arm.com &
+		ssh-uptime login3.sce01.na02.arm.com &
+		ssh-uptime login4.sce01.na02.arm.com &
+		ssh-uptime login5.sce01.na02.arm.com &
+		ssh-uptime login6.sce01.na02.arm.com &
+		ssh-uptime login7.sce01.na02.arm.com &
+		ssh-uptime login8.sce01.na02.arm.com &
+		wait
+	) | column -t | sort -n -k 11
+}
+
 function login-stat-euhpc() {
 	(
 		ssh-uptime login1.euhpc.arm.com &
