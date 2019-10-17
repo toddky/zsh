@@ -31,6 +31,7 @@ function preexec() {
 # e.g. when a notification about an exiting job is displayed.
 
 function precmd() {
+
 	# Record elapsed time
 	local RETVAL=$? _current_ms=$(_get-ms)
 
@@ -40,7 +41,16 @@ function precmd() {
 	# Print elapsed time
 	if (( ! ${+_elapsed_ms} )); then
 		_elapsed_ms=$(($_current_ms-$_start_ms))
-		echo -e "\x1b[38;5;8m[$(date +%T)] Execution time: $(_elapsed-time)s\e[0m"
+
+		# Print seconds
+		printf "\x1b[38;5;8m[$(date +%T)] Execution time: "
+		printf "%0.3fs" $(($_elapsed_ms/1000.0))
+
+		# Print hours
+		if (( _elapsed_ms > 3600000 )); then
+			printf " (%0.2f hours)" $(($_elapsed_ms/3600000.0))
+		fi
+		printf "\e[0m\n"
 	fi
 
 	# Disable tmux monitor
