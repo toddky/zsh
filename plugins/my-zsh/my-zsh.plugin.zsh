@@ -103,7 +103,7 @@ alias du3='du --max-depth=3'
 
 alias ascii='man ascii'
 
-alias diff='colordiff -w'
+which colordiff &> /dev/null && alias diff='colordiff -w'
 
 alias suu='su $(whoami)'
 
