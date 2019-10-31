@@ -42,3 +42,13 @@ function twindow-ssh-euhpc() {
 	tmux select-layout tiled
 }
 
+function twindow-ssh-euhpc2() {
+	tmux new-window -n "euhpc2" ssh login1.euhpc2.arm.com
+	tsplit-ssh login2.euhpc2.arm.com
+	tsplit-ssh login3.euhpc2.arm.com
+	tsplit-ssh login4.euhpc2.arm.com
+	tsplit-ssh login5.euhpc2.arm.com
+	tsplit-ssh login6.euhpc2.arm.com
+	tmux select-layout tiled
+}
+
