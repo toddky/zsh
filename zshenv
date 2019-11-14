@@ -2,7 +2,15 @@
 # --- Run Latest zsh ---
 # This is a stupid hack that will probably break and cause infinite recursion
 if [[ -n $PROMPT && -d /arm/tools/ ]]; then
-	PATH=/arm/tools/zsh/zsh/5.0.2/rhe6-x86_64/bin:$PATH
+
+	rhe=$(lsb_release -rs | cut -f1 -d.)
+	if [[ $rhe == 6 ]]; then
+		#PATH=/arm/tools/zsh/zsh/5.0.2/rhe6-x86_64/bin:$PATH
+		PATH="/arm/tools/zsh/zsh/5.7.1/rhe6-x86_64/bin:$PATH"
+	elif [[ $rhe == 7 ]]; then
+		PATH="/arm/tools/zsh/zsh/5.7.1/rhe7-x86_64/bin:$PATH"
+	fi
+
 	if [[ $ZSH_VERSION != $(zsh --version | cut -d' ' -f 2) ]]; then
 		exec zsh
 	fi
