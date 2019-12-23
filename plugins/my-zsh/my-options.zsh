@@ -1,7 +1,16 @@
 
 # `man zshoptions`
 
-# --- Miscellaneous ---
+# ==============================================================================
+# SPELL CHECK
+# ==============================================================================
+setopt correct
+export SPROMPT="Use $fg_bold[green]%r$reset_color instead of $fg_bold[red]%R$reset_color? "
+
+
+# ==============================================================================
+# MISCELLANEOUS
+# ==============================================================================
 # Disable annoying beeps
 unsetopt BEEP
 # Print red [stderr] for stderr
@@ -9,7 +18,10 @@ unsetopt MULTIOS
 exec 9>&2 2> >(while read line; do echo "\e[31m[stderr]\e[0m $line"; done; )
 exec 2>&- 2>&9
 
-# --- Permissions ---
+
+# ==============================================================================
+# PERMISSIONS
+# ==============================================================================
 # rw-rw-r-- files
 # rwxrwxr-x directories
 umask 002
@@ -17,7 +29,10 @@ umask 002
 # rwxr-xr-x directories
 #umask 022
 
-# --- Changing Directory ---
+
+# ==============================================================================
+# CHANGING DIRECTORY
+# ==============================================================================
 # `dir` -> `cd dir`
 setopt AUTO_CD
 # `cd dir` -> `push dir`
@@ -35,7 +50,10 @@ setopt PUSHD_SILENT
 # `pushd` -> `pushd $HOME`
 setopt PUSHD_TO_HOME
 
-# --- Completion Options ---
+
+# ==============================================================================
+# COMPLETION
+# ==============================================================================
 # Move cursor to end of word at full completion
 setopt ALWAYS_TO_END
 # List choice on ambiguous completion
@@ -43,7 +61,10 @@ setopt AUTO_LIST
 # Cursor stays in place until completed on both ends
 setopt COMPLETE_IN_WORD
 
-# --- Expansion/Globbing Options ---
+
+# ==============================================================================
+# EXPANSION/GLOBBING
+# ==============================================================================
 setopt EXTENDED_GLOB
 # Case-insensitive matching
 unsetopt CASE_GLOB
@@ -52,7 +73,10 @@ unsetopt CSH_NULL_GLOB
 # Report errors if no matches
 unsetopt NULL_GLOB
 
-# --- History Options ---
+
+# ==============================================================================
+# HISTORY
+# ==============================================================================
 # Append parallel zsh sessions
 setopt APPEND_HISTORY
 # Perform textual history expansion
