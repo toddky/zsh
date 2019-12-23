@@ -33,7 +33,7 @@ function vs()      { vim -S $@; }
 function vburst() {
 	local uart=${1?} syntax
 	syntax='syntax=burstlog'
-	if [[ "$(file $uart)" =~ ' LF ' ]]; then
+	if [[ "$(file $uart)" =~ ' LF ' ]] || [[ "$(file $uart)" =~ ' data' ]]; then
 		(
 			strings $uart
 			echo "# vim: $syntax"
