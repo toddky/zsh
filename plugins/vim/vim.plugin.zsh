@@ -19,6 +19,8 @@ alias vman='vim -c MANPAGER -'
 alias vmin='vim --noplugin'
 alias vnone='vim -u NONE'
 alias vdiff='vimdiff'
+alias vdiffw="vimdiff -c 'set diffopt+=iwhite'"
+alias vimdiffw="vimdiff -c 'set diffopt+=iwhite'"
 alias vall="vim -c 'tab sball'"
 alias vwiki='vim +VimwikiIndex'
 
