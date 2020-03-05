@@ -65,8 +65,12 @@ function tnew() {
 # Search for pane using PID
 function tps() {
 	local pid=${1?pid undefined} pane_id
-	pane_id=$(ps hew $pid | sed 's/^.*TMUX_PANE=\(%[0-9]\+\).*/\1/')
-	tmux display-message -t $pane_id -p '#{session_name}.#{window_index}.#{pane_index} #{pane_id}'
+	pane_id=$(ps hew $pid | sed -n 's/^.*TMUX_PANE=\(%[0-9]\+\).*/\1/p')
+	if [[ -z "$pane_id" ]]; then
+		echo "Pane ID not found for pid=$pid"
+	else
+		tmux display-message -t "$pane_id" -p '#{session_name}.#{window_index}.#{pane_index} #{pane_id}'
+	fi
 }
 
 # Search for pane using PID
