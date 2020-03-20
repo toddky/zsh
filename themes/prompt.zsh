@@ -1,7 +1,7 @@
 
-# =====================
-#    PROMPT SETTINGS
-# =====================
+# ==============================================================================
+# PROMPT SETTINGS
+# ==============================================================================
 
 # TODO: Investigate vim=mode:
 # https://dustri.org/b/my-zsh-configuration.html#show-vim-mode-in-you-prompt
@@ -31,12 +31,12 @@ TMOUT=60
 
 # --- Set $PROMPT and $RPROMPT ---
 PROMPT='$(build_prompt)'
-RPROMPT='$(build_rprompt)'
+#RPROMPT='$(build_rprompt)'
 
 
-# =========================
-#    POWERLINE FUNCTIONS
-# =========================
+# ==============================================================================
+# POWERLINE FUNCTIONS
+# ==============================================================================
 
 # --- Check Powerline ---
 function _set-powerline() {
@@ -44,9 +44,10 @@ function _set-powerline() {
 }
 _set-powerline
 
-# ===========================
-#    LEFT PROMPT FUNCTIONS
-# ===========================
+
+# ==============================================================================
+# LEFT PROMPT FUNCTIONS
+# ==============================================================================
 
 # --- Prompt Background ---
 function _prompt-bg() {
@@ -90,9 +91,9 @@ function _prompt-end() {
 }
 
 
-# ============================
-#    RIGHT PROMPT FUNCTIONS
-# ============================
+# ==============================================================================
+# RIGHT PROMPT FUNCTIONS
+# ==============================================================================
 
 # --- Right Prompt Background ---
 function _rprompt-bg() {

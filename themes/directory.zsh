@@ -16,19 +16,21 @@ function _dir-permission() {
 
 # --- Permission ---
 function _permission-ugo() {
-	local access default=white
-	local user=$default group=$default world=$default
+	local access me my_groups default=white
+	local user_fg=$default group_fg=$default world_fg=$default
 	access=$(stat -c %a . 2>/dev/null) || return
 
 	# User permission
-	[[ $(whoami) == $(stat -c %U . 2>/dev/null) ]] || user=red
-	_prompt-fg $user $access[-3]
+	me="$(whoami 2>/dev/null || echo NOBODY)"
+	[[ "$me" == "$(stat -c %U . 2>/dev/null)" ]] || user_fg=red
+	_prompt-fg $user_fg "$access[-3]"
 
 	# Group permission
-	[[ $(groups) =~ $(stat -c %G . 2>&1) ]] || group=red
-	_prompt-fg $group $access[-2]
+	my_groups="$(groups 2>/dev/null || echo NONE)"
+	[[ $(groups) =~ $(stat -c %G . 2>&1) ]] || group_fg=red
+	_prompt-fg $group_fg "$access[-2]"
 
 	# World permission
-	_prompt-fg $world "$access[-1]"
+	_prompt-fg $world_fg "$access[-1]"
 }
 
