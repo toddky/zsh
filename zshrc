@@ -59,8 +59,14 @@ if ((profile==1)); then
 	}
 fi
 
-export ZSH_DISABLE_COMPFIX=true
+#export ZSH_DISABLE_COMPFIX=true
+${ZSH_DISABLE_COMPFIX:=true}
 source $ZSH/oh-my-zsh.sh
 
 source $HOME/.zsh/zplugin
+
+
+# Instant zsh prompt
+# Must be called at the end of file
+instant-zsh-post
 
