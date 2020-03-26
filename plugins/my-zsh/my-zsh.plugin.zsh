@@ -147,3 +147,12 @@ function zsh_colors() {
 	done
 }
 
+# compdefs
+# Source: https://stackoverflow.com/questions/40010848/how-to-list-all-zsh-autocompletions
+function compdefs() {
+	#for command completion in ${(kv)_comps:#-*(-|-,*)}; do
+	for command completion in ${(kv)_comps}; do
+		printf "%-32s %s\n" $command $completion
+	done | sort
+}
+
