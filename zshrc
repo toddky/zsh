@@ -2,12 +2,12 @@
 # ==============================================================================
 # INSTANT ZSH PROMPT
 # ==============================================================================
-if  [[ -f $HOME/.zsh/downloads/instant-zsh.zsh ]]; then
+if [[ -f $HOME/.zsh/downloads/instant-zsh.zsh ]]; then
 	source $HOME/.zsh/downloads/instant-zsh.zsh
-	local instant_prompt
+	local instant_prompt=''
 	instant_prompt+='%{%K{red}%F{white}%}LOADING...'
 	instant_prompt+='%{%K{blue}%F{red}%}'
-	instant_prompt+='%{%K{blue}%F{white}%}%~'
+	instant_prompt+='%{%K{blue}%F{white}%}%1~'
 	instant_prompt+='%{%K{default}%F{blue}%}'
 	instant_prompt+='%{%f%}% '
 	instant-zsh-pre "$instant_prompt"
