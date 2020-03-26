@@ -64,7 +64,7 @@ load-once meld/meld/3.14.0
 load-once mosh/mosh/1.2.4
 load-once stedolan/jq/1.5
 load-once tkdiff/tkdiff
-load-once vim/vim/8.0.5
+load-once vim/vim/8.2
 load-once xclip/xclip/0.12
 load-once zsh/zsh/5.0.2
 
