@@ -1,0 +1,10 @@
+
+# vi: ft=zsh
+
+cmd=$0
+if ! (hash $cmd &>/dev/null); then
+	module load mentor/questasim/2019.1_1
+fi
+unfunction $cmd
+$cmd $@
+

@@ -13,10 +13,6 @@ function ctags_sv() {
 # QUESTA
 # ==============================================================================
 
-# --- Modules ---
-alias questaloadold='mload mentor/questasim/10.7_1'
-alias questaload='mload mentor/questasim/2019.1_1'
-
 # --- Aliases ---
 alias ucdb_report_parse="awk '/^\s*CLASS/{class=\$2} \
 /^\s*TYPE/{type=\$2} \
@@ -100,10 +96,6 @@ compdef _pdb_file pdb_report
 # SYNOPSYS
 # ==============================================================================
 
-# --- Modules ---
-#alias verdiload='mload novas/verdi3/2015.09'
-alias verdiload='mload synopsys/verdi3/2017.12'
-
 # --- Run ---
 function bs_verdi() {
 	which verdi || return 1
@@ -121,24 +113,6 @@ compdef _fsdb_file bs_verdi
 # ==============================================================================
 # VELOCE
 # ==============================================================================
-
-# --- Modules ---
-alias velload3018='mload mentor/veloce/3.0.1.8'
-alias velload31611='mload mentor/veloce/3.16.1.1'
-alias velload31612='mload mentor/veloce/3.16.1.2'
-alias velload31614='mload mentor/veloce/3.16.1.4'
-alias velload31615='mload mentor/veloce/3.16.1.5_patched'
-alias velload31616='mload mentor/veloce/3.16.1.6'
-alias velload31617='mload mentor/veloce/3.16.1.7'
-alias velload31618='mload mentor/veloce/3.16.1.8'
-alias velload1800='mload mentor/veloce/18.0.0'
-alias velload='velload1800'
-
-alias tbxload='mload mentor/tbx/2.4.4.9'
-alias visload='mload mentor/questavdbg/10.6a'
-
-alias stratoload1800='mload mentor/strato/18.0.0'
-alias stratoload='stratoload1800'
 
 # --- Information ---
 alias veluse='velec -usagestat'
@@ -184,7 +158,6 @@ function velcopy_logs() {
 }
 
 function vel2fsdb() {
-	velload31618
 	export LD_LIBRARY_PATH=/arm/tools/mentor/veloce/3.16.1.3/Veloce_v3.16.1.3/lib/amd64.linux.waveserver/:$LD_LIBRARY_PATH
 	export LD_LIBRARY_PATH=/arm/tools/mentor/veloce/3.16.1.3/Veloce_v3.16.1.0/debussy/share/FsdbWriter/LINUX64:$LD_LIBRARY_PATH
 	echo '****************************' > sigs
@@ -192,8 +165,6 @@ function vel2fsdb() {
 }
 
 function visvel() {
-	velload
-	visload
 	vis -veloce
 }
 
@@ -205,9 +176,6 @@ alias vis_nortl='viswave tracedir veloce.wave/waves.stw'
 # ==============================================================================
 # ZEBU
 # ==============================================================================
-
-# --- Modules ---
-alias zebuload='mload synopsys/zebu/2015.09-7_engfix_EF1'
 
 # --- zSpy Aliases ---
 alias zjobs='zSpy -batch -systemDir /arm/local/synopsys/zebu/zebu_system_dir_ZS3'

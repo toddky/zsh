@@ -1,0 +1,10 @@
+
+# vi: ft=zsh
+
+cmd=$0
+if ! (hash $cmd &>/dev/null); then
+	module load synopsys/verdi3/2020.03
+fi
+unfunction $cmd
+$cmd $@
+

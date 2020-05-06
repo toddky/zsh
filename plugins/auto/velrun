@@ -1,0 +1,10 @@
+
+# vi: ft=zsh
+
+cmd=$0
+if ! (hash $cmd &>/dev/null); then
+	module load mentor/veloce/20.0.1
+fi
+unfunction $cmd
+$cmd $@
+
