@@ -1,0 +1,11 @@
+
+# vi: ft=zsh
+
+# Autoload burst command
+local top=/projects/pd/pj00311_burst/users/todyam01/tools-dev
+if ! (hash burst &>/dev/null); then
+	module load $top/modulefile
+fi
+unfunction burst
+burst $@
+

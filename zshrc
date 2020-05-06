@@ -35,13 +35,14 @@ ZSH_COMPDUMP=$ZSH_COMPDIR/$(hostname --long)
 ZSH_THEME_DEFAULT="my-theme"
 [[ -z $ZSH_THEME ]] && ZSH_THEME=$ZSH_THEME_DEFAULT
 
+plugins=(auto)
 if [[ $(hostname --long) =~ arm.com$ ]]; then
-	plugins=(arm lsf eda)
+	plugins+=(arm lsf eda)
 else
 	function module(){}
 fi
 plugins+=(bin modules my-zsh cd vim xclip tmux vi-mode regex math setup git svn emacs)
-[[ -f ~/.fzf.zsh ]] && plugins+=(fzf)
+[[ -d ~/.fzf ]] && plugins+=(fzf)
 plugins+=(history-substring-search)
 
 # Uncomment options for debug
@@ -50,8 +51,9 @@ plugins+=(history-substring-search)
 #setopt SOURCE_TRACE
 
 # Uncomment to profile
-#local profile=1
-if ((profile==1)); then
+local profile=0
+#profile=1
+if ((profile)); then
 	function source() {
 		local start_ms=$(date +%s%3N)
 		builtin source $1
