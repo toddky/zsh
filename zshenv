@@ -10,6 +10,7 @@ if [[ -n $PROMPT && -d /arm/tools/ ]]; then
 	elif [[ $rhe == 7 ]]; then
 		PATH="/arm/tools/zsh/zsh/5.7.1/rhe7-x86_64/bin:$PATH"
 	fi
+	MANPATH="/arm/tools/zsh/zsh/5.7.1/common/man:$MANPATH"
 
 	if [[ $ZSH_VERSION != $(zsh --version | cut -d' ' -f 2) ]]; then
 		exec zsh

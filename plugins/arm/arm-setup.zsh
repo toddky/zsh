@@ -2,6 +2,9 @@
 # Check if already loaded
 ((_ARM_SETUP_LOADED)) && return
 export _ARM_SETUP_LOADED=1
+export LOADEDMODULES=
+export LOADEDMODULES_modshare=
+export DEPOT_SETUP_ROOT=/arm/tools/setup
 
 # --- module commands ---
 source $DEPOT_SETUP_ROOT/init/bash.d/modules-init

@@ -82,5 +82,3 @@ source $HOME/.zsh/zplugin
 # Must be called at the end of file
 ((instant)) && instant-zsh-post
 
-cowsay "ZSH_VERSION $ZSH_VERSION"
-
