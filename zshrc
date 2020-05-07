@@ -32,27 +32,6 @@ fi
 export ZSH=$HOME/.oh-my-zsh
 export SHELL=$(builtin which zsh)
 
-DISABLE_AUTO_TITLE=true
-COMPLETION_WAITING_DOTS="true"
-
-# Setup .zcompdump directory
-[[ -z $ZSH_COMPDIR ]] && ZSH_COMPDIR=~/.config/zsh/zcompdir
-mkdir -p $ZSH_COMPDIR
-ZSH_COMPDUMP=$ZSH_COMPDIR/$(hostname --long)
-
-plugins=(auto)
-if [[ $(hostname --long) =~ arm.com$ ]]; then
-	plugins+=(arm lsf eda)
-fi
-plugins+=(bin my-zsh cd vim xclip tmux vi-mode regex math setup git svn emacs)
-plugins+=(fzf)
-#plugins+=(history-substring-search)
-
-# Uncomment options for debug
-#setopt XTRACE
-#setopt VERBOSE
-#setopt SOURCE_TRACE
-
 if ((profile)); then
 	function source() {
 		local start_ms=$(date +%s%3N)
@@ -61,11 +40,28 @@ if ((profile)); then
 	}
 fi
 
-autoload -Uz compinit
-compinit -i
 
-#export ZSH_DISABLE_COMPFIX=true
-${ZSH_DISABLE_COMPFIX:=true}
+# Setup compinit directory
+[[ -z $ZSH_COMPDIR ]] && export ZSH_COMPDIR=~/.config/zsh/zcompdir
+mkdir -p $ZSH_COMPDIR
+export ZSH_COMPDUMP=$ZSH_COMPDIR/$(hostname --long)
+autoload -U compinit
+_comp_options+=(globdots)
+compinit -i -C -d "${ZSH_COMPDUMP}"
+
+# Use plugins
+plugins=(auto my-zsh)
+if [[ $(hostname --long) =~ arm.com$ ]]; then
+	plugins+=(arm lsf eda)
+fi
+plugins+=(bin cd vim xclip tmux vi-mode regex math setup git svn emacs)
+plugins+=(fzf)
+
+# Uncomment options for debug
+#setopt XTRACE
+#setopt VERBOSE
+#setopt SOURCE_TRACE
+
 for plugin in $plugins; do
 	source "$ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh"
 done

@@ -1,6 +1,7 @@
 
 # --- Source Files ---
 local here=${0:h}
+source $here/my-completion.zsh
 source $here/my-options.zsh
 source $here/my-builtins.zsh
 for sourcefile in $here/alias/*.zsh; do

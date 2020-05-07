@@ -4,6 +4,9 @@
 # From oh-my-zsh:
 # https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/history.zsh
 
+# Settings
+COMPLETION_WAITING_DOTS="true"
+
 # fixme - the load process here seems a bit bizarre
 zmodload -i zsh/complist
 

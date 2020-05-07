@@ -1,4 +1,7 @@
 
+local here=${0:h}
+fpath=($here $fpath)
+
 autoload burst
 autoload pdf
 autoload vcover
