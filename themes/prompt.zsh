@@ -18,10 +18,10 @@ zle -N zle-keymap-select
 zle -N edit-command-line
 
 # --- Redraw Every Minute ---
-function TRAPALRM() {
-	zle reset-prompt
-}
-TMOUT=60
+#function TRAPALRM() {
+	#zle reset-prompt
+#}
+#TMOUT=60
 
 # Alternative way to redraw every minute
 #function periodic() {
