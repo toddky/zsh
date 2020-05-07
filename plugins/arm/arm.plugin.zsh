@@ -3,15 +3,25 @@
 # MODULE SETUP
 # ==============================================================================
 local here=${0:h}
+export _ARM_MODULEFILE="$(readlink -f "$here/modulefile")"
 source $here/arm-setup.zsh
 
 # Check for new modulefile changes
-local version="$(md5sum "$here/modulefile")"
+local version="$(md5sum "$_ARM_MODULEFILE")"
 if [[ "$_MODULEFILE_VERSION" != "$version" ]]; then
 	module purge
 	export _MODULEFILE_VERSION
-	module load $here/modulefile && _MODULEFILE_VERSION="$version" || _MODULEFILE_VERSION=
+	module load "$_ARM_MODULEFILE" && _MODULEFILE_VERSION="$version" || _MODULEFILE_VERSION=
 fi
+
+# Reload modulefile
+function mreset() {
+	export _ARM_SETUP_LOADED=0
+	source "$(dirname "$_ARM_MODULEFILE")/arm-setup.zsh"
+	module purge
+	export _MODULEFILE_VERSION
+	module load "$_ARM_MODULEFILE" && _MODULEFILE_VERSION="$version" || _MODULEFILE_VERSION=
+}
 
 for sourcefile in $here/modules/*.zsh; do
 	source $sourcefile
