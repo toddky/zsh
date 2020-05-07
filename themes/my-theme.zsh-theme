@@ -28,19 +28,6 @@ function _prompt-status() {
 	_prompt-bg-fg black default "$symbols"
 }
 
-# --- Git Status ---
-function _prompt-git() {
-	$here/git.bash
-}
-
-
-# --- SVN Status ---
-function _prompt-svn() {
-	_svn-check || return
-	_prompt-bg-fg black white ' .svn'
-}
-
-
 # --- Build Prompt ---
 build_prompt() {
 	_prompt-start
@@ -48,10 +35,9 @@ build_prompt() {
 	_prompt-bg black
 	_prompt-status
 	_projects-status
-	_hostinfo
+	$here/host.bash
 	[[ $_prompt_version == $(_prompt-git-version) ]] || echo -n $_ZSH_DEGREE
-	_prompt-git
-	_prompt-svn
+	$here/git.bash
 	_dir-permission
 	_prompt-end
 }
