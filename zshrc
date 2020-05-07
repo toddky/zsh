@@ -2,6 +2,8 @@
 # ==============================================================================
 # SETTINGS
 # ==============================================================================
+export ZSH_CUSTOM=$HOME/.zsh
+
 local profile=0
 #profile=1
 
@@ -12,8 +14,8 @@ local instant=1
 # ==============================================================================
 # INSTANT ZSH PROMPT
 # ==============================================================================
-if ((instant)) && [[ -f $HOME/.zsh/downloads/instant-zsh.zsh ]]; then
-	source $HOME/.zsh/downloads/instant-zsh.zsh
+if ((instant)) && [[ -f "$ZSH_CUSTOM/downloads/instant-zsh.zsh" ]]; then
+	source "$ZSH_CUSTOM/downloads/instant-zsh.zsh"
 	local instant_prompt=''
 	instant_prompt+='%{%K{red}%F{white}%}LOADING...'
 	instant_prompt+='%{%K{blue}%F{red}%}'
@@ -25,13 +27,10 @@ fi
 
 
 # ==============================================================================
-# OH-My-ZSH
+# ZSHRC
 # ==============================================================================
-# TODO: Investigate antibody: https://github.com/getantibody/antibody
-
 export ZSH=$HOME/.oh-my-zsh
 export SHELL=$(builtin which zsh)
-export ZSH_CUSTOM=$HOME/.zsh
 
 DISABLE_AUTO_TITLE=true
 COMPLETION_WAITING_DOTS="true"
@@ -46,7 +45,7 @@ if [[ $(hostname --long) =~ arm.com$ ]]; then
 	plugins+=(arm lsf eda)
 fi
 plugins+=(bin my-zsh cd vim xclip tmux vi-mode regex math setup git svn emacs)
-[[ -d ~/.fzf ]] && plugins+=(fzf)
+plugins+=(fzf)
 #plugins+=(history-substring-search)
 
 # Uncomment options for debug
@@ -73,10 +72,15 @@ done
 source $ZSH_CUSTOM/themes/my-theme.zsh-theme
 source $HOME/.zsh/zplugin
 
+# Very cool plugin, just too slow
+#source "$ZSH_CUSTOM/downloads/zsh-autocomplete.plugin.zsh"
+
 
 # ==============================================================================
 # INSTANT ZSH PROMPT
 # ==============================================================================
 # Must be called at the end of file
 ((instant)) && instant-zsh-post
+
+cowsay "ZSH_VERSION $ZSH_VERSION"
 

@@ -1,3 +1,12 @@
+
+# ==============================================================================
+# INSTANT ZSH PROMPT
+# ==============================================================================
+# Exit if function already defined
+if (typeset -f instant-zsh-post &> /dev/null); then
+  return
+fi
+
 # Make zsh start INSTANTLY with this one weird trick.
 #
 #         https://asciinema.org/a/274255
@@ -124,4 +133,4 @@ function instant-zsh-post() {
   fi
 }
 
-# vim: ts=2
+# vim: et ts=2
