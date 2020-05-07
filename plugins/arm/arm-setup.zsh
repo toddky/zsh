@@ -1,5 +1,7 @@
 
-export DEPOT_SETUP_ROOT=/arm/tools/setup
+# Check if already loaded
+((_ARM_SETUP_LOADED)) && return
+export _ARM_SETUP_LOADED=1
 
 # --- module commands ---
 source $DEPOT_SETUP_ROOT/init/bash.d/modules-init

@@ -1,8 +1,14 @@
 
+local profile=0
+#profile=1
+
+local instant=1
+#instant=0
+
 # ==============================================================================
 # INSTANT ZSH PROMPT
 # ==============================================================================
-if [[ -f $HOME/.zsh/downloads/instant-zsh.zsh ]]; then
+if ((instant)) && [[ -f $HOME/.zsh/downloads/instant-zsh.zsh ]]; then
 	source $HOME/.zsh/downloads/instant-zsh.zsh
 	local instant_prompt=''
 	instant_prompt+='%{%K{red}%F{white}%}LOADING...'
@@ -38,10 +44,8 @@ ZSH_THEME_DEFAULT="my-theme"
 plugins=(auto)
 if [[ $(hostname --long) =~ arm.com$ ]]; then
 	plugins+=(arm lsf eda)
-else
-	function module(){}
 fi
-plugins+=(bin modules my-zsh cd vim xclip tmux vi-mode regex math setup git svn emacs)
+plugins+=(bin my-zsh cd vim xclip tmux vi-mode regex math setup git svn emacs)
 [[ -d ~/.fzf ]] && plugins+=(fzf)
 plugins+=(history-substring-search)
 
@@ -50,9 +54,6 @@ plugins+=(history-substring-search)
 #setopt VERBOSE
 #setopt SOURCE_TRACE
 
-# Uncomment to profile
-local profile=0
-#profile=1
 if ((profile)); then
 	function source() {
 		local start_ms=$(date +%s%3N)
@@ -64,11 +65,12 @@ fi
 #export ZSH_DISABLE_COMPFIX=true
 ${ZSH_DISABLE_COMPFIX:=true}
 source $ZSH/oh-my-zsh.sh
-
 source $HOME/.zsh/zplugin
 
 
-# Instant zsh prompt
+# ==============================================================================
+# INSTANT ZSH PROMPT
+# ==============================================================================
 # Must be called at the end of file
-instant-zsh-post
+((instant)) && instant-zsh-post
 
