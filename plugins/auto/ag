@@ -1,0 +1,10 @@
+
+# vi: ft=zsh
+
+cmd=$0
+if ! (hash $cmd &>/dev/null); then
+	module load meld/meld/3.20.1
+fi
+unfunction $cmd
+$cmd $@
+

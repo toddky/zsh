@@ -1,0 +1,10 @@
+
+# vi: ft=zsh
+
+cmd=$0
+if ! (hash $cmd &>/dev/null); then
+	module load tkdiff/tkdiff
+fi
+unfunction $cmd
+$cmd $@
+
