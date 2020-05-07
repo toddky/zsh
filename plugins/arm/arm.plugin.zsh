@@ -4,13 +4,18 @@
 # ==============================================================================
 local here=${0:h}
 source $here/arm-setup.zsh
-module purge
-module load $here/modulefile
+
+# Check for new modulefile changes
+local version="$(md5sum "$here/modulefile")"
+if [[ "$_MODULEFILE_VERSION" != "$version" ]]; then
+	module purge
+	export _MODULEFILE_VERSION
+	module load $here/modulefile && _MODULEFILE_VERSION="$version" || _MODULEFILE_VERSION=
+fi
 
 for sourcefile in $here/modules/*.zsh; do
 	source $sourcefile
 done
-
 
 
 # ==============================================================================
