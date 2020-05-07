@@ -4,7 +4,6 @@ source $here/symbols.zsh
 
 source $here/directory.zsh
 source $here/display.zsh
-source $here/git.zsh
 source $here/host.zsh
 source $here/pre.zsh
 source $here/projects.zsh

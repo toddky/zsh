@@ -30,14 +30,7 @@ function _prompt-status() {
 
 # --- Git Status ---
 function _prompt-git() {
-	_git-check || return
-	_prompt-bg-fg black white ' '
-	if _git-blacklist; then
-		_git-short-branch
-	else
-		_git-detailed-branch
-		_git-commits
-	fi
+	$here/git.bash
 }
 
 
