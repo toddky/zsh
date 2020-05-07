@@ -4,6 +4,7 @@
 # ==============================================================================
 # SPELL CHECK
 # ==============================================================================
+# https://hund0b1.gitlab.io/2018/08/04/spell-check-and-auto-correction-of-commands-in-zsh.html
 setopt correct
 export SPROMPT="Use $fg_bold[green]%r$reset_color instead of $fg_bold[red]%R$reset_color? "
 
@@ -77,14 +78,35 @@ unsetopt NULL_GLOB
 # ==============================================================================
 # HISTORY
 # ==============================================================================
+# Example available here:
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/history.zsh
+
+# History file configuration
+# TODO: Move $HISTFILE
+#HISTFILE="$HOME/config/zsh/history"
+#[[ -z "$HISTFILE" ]] && HISTFILE="$HOME/config/zsh/history"
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+
 # Append parallel zsh sessions
 setopt APPEND_HISTORY
+# Add commands to HISTFILE in order of execution
+setopt INC_APPEND_HISTORY
 # Perform textual history expansion
 setopt BANG_HIST
 # Save timestamps and duration
 setopt EXTENDED_HISTORY
+# Delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt HIST_EXPIRE_DUPS_FIRST
 # Remove older duplicates when added
 setopt HIST_IGNORE_ALL_DUPS
 # Remove extra whitespace
 setopt HIST_REDUCE_BLANKS
+# Show expanded command before running it
+setopt HIST_VERIFY
+# Share command history data
+setopt SHARE_HISTORY
+# Ignore commands that start with space
+unsetopt HIST_IGNORE_SPACE
 

@@ -1,9 +1,13 @@
 
+# ==============================================================================
+# SETTINGS
+# ==============================================================================
 local profile=0
 #profile=1
 
 local instant=1
 #instant=0
+
 
 # ==============================================================================
 # INSTANT ZSH PROMPT
@@ -33,13 +37,9 @@ DISABLE_AUTO_TITLE=true
 COMPLETION_WAITING_DOTS="true"
 
 # Setup .zcompdump directory
-[[ -z $ZSH_COMPDIR ]] && ZSH_COMPDIR=~/.zcompdir
+[[ -z $ZSH_COMPDIR ]] && ZSH_COMPDIR=~/.config/zsh/zcompdir
 mkdir -p $ZSH_COMPDIR
 ZSH_COMPDUMP=$ZSH_COMPDIR/$(hostname --long)
-
-# Setup theme
-ZSH_THEME_DEFAULT="my-theme"
-[[ -z $ZSH_THEME ]] && ZSH_THEME=$ZSH_THEME_DEFAULT
 
 plugins=(auto)
 if [[ $(hostname --long) =~ arm.com$ ]]; then
@@ -47,7 +47,7 @@ if [[ $(hostname --long) =~ arm.com$ ]]; then
 fi
 plugins+=(bin my-zsh cd vim xclip tmux vi-mode regex math setup git svn emacs)
 [[ -d ~/.fzf ]] && plugins+=(fzf)
-plugins+=(history-substring-search)
+#plugins+=(history-substring-search)
 
 # Uncomment options for debug
 #setopt XTRACE
@@ -62,9 +62,15 @@ if ((profile)); then
 	}
 fi
 
+autoload -Uz compinit
+compinit -i
+
 #export ZSH_DISABLE_COMPFIX=true
 ${ZSH_DISABLE_COMPFIX:=true}
-source $ZSH/oh-my-zsh.sh
+for plugin in $plugins; do
+	source "$ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh"
+done
+source $ZSH_CUSTOM/themes/my-theme.zsh-theme
 source $HOME/.zsh/zplugin
 
 

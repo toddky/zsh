@@ -1,7 +1,9 @@
 
-# ========================
-#    VI KEYMAP SETTINGS
-# ========================
+local here=${0:h}
+
+# ==============================================================================
+# VI KEYMAP SETTINGS
+# ==============================================================================
 
 # Select vi keymap
 bindkey -v
@@ -10,9 +12,9 @@ bindkey -v
 export KEYTIMEOUT=2
 
 
-# ==================
-#    ZSH COMMANDS
-# ==================
+# ==============================================================================
+# ZSH COMMANDS
+# ==============================================================================
 function zkeys() {
 	for keymap in $(bindkey -l); do
 		bindkey -M $keymap | awk '{$1="['$keymap'] "$1; print}'
@@ -20,9 +22,9 @@ function zkeys() {
 }
 
 
-# =============
-#    WIDGETS
-# =============
+# ==============================================================================
+# WIDGETS
+# ==============================================================================
 
 zle -N vi-up-begin
 function vi-up-begin() {
@@ -54,23 +56,24 @@ function vi-my-backward-kill-word() {
 }
 
 
-# =========================
-#    COMMAND/INSERT MODE
-# =========================
+# ==============================================================================
+# COMMAND/INSERT MODE
+# ==============================================================================
 
 # Clear screen if buffer is empty
 bindkey -M viins "^M" clear-on-empty-buffer
 bindkey -M vicmd "^M" clear-on-empty-buffer
 
 
-# =================
-#    INSERT MODE
-# =================
+# ==============================================================================
+# INSERT MODE
+# ==============================================================================
 
 # Ctrl-f to enter vicmd mode
 bindkey -M viins '^F' vi-cmd-mode
 
 # Ctrl-j and Ctrl-k to search history using history-substring-search plugin
+source $here/history-substring-search.zsh
 bindkey -M viins "^J" history-substring-search-down
 bindkey -M viins "^K" history-substring-search-up
 
@@ -87,9 +90,9 @@ bindkey -M viins '^[p' vi-xclip-paste
 #bindkey -M viins '^[^?' backward-kill-word
 
 
-# ==================
-#    COMMAND MODE
-# ==================
+# ==============================================================================
+# COMMAND MODE
+# ==============================================================================
 
 # Move to beginning/end of line
 bindkey -M vicmd 'H' vi-beginning-of-line
@@ -103,9 +106,9 @@ bindkey -M vicmd 'v' edit-command-line
 bindkey -M vicmd ':' vi-rev-repeat-find
 
 
-# =====================
-#    MENU SELCT MODE
-# =====================
+# ==============================================================================
+# MENU SELCT MODE
+# ==============================================================================
 bindkey -M menuselect 'k' up-line-or-history
 bindkey -M menuselect 'j' down-line-or-history
 bindkey -M menuselect 'l' forward-char
