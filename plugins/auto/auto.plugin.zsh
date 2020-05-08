@@ -1,6 +1,9 @@
 
 local here=${0:h}
-fpath=($here $fpath)
+
+if [[ ! " ${fpath[@]} " =~ " ${here} " ]]; then
+	fpath=($here $fpath)
+fi
 
 autoload ag
 autoload burst
@@ -15,7 +18,9 @@ autoload vcover
 autoload velcomp
 autoload velec
 autoload velrun
-autoload verdi
 autoload vsim
 autoload zSpy
+
+autoload verdi
+autoload vcd2fsdb
 
