@@ -14,15 +14,21 @@ local instant=1
 # ==============================================================================
 # INSTANT ZSH PROMPT
 # ==============================================================================
-if ((instant)) && [[ -f "$ZSH_CUSTOM/downloads/instant-zsh.zsh" ]]; then
-	source "$ZSH_CUSTOM/downloads/instant-zsh.zsh"
-	local instant_prompt=''
-	instant_prompt+='%{%K{red}%F{white}%}LOADING...'
-	instant_prompt+='%{%K{blue}%F{red}%}'
-	instant_prompt+='%{%K{blue}%F{white}%}%1~'
-	instant_prompt+='%{%K{default}%F{blue}%}'
-	instant_prompt+='%{%f%}% '
-	instant-zsh-pre "$instant_prompt"
+if ((instant)); then
+	if [[ -f "$ZSH_CUSTOM/downloads/instant-zsh.zsh" ]]; then
+		source "$ZSH_CUSTOM/downloads/instant-zsh.zsh"
+		local instant_prompt=''
+		instant_prompt+='%{%K{red}%F{white}%}LOADING...'
+		instant_prompt+='%{%K{blue}%F{red}%}'
+		instant_prompt+='%{%K{blue}%F{white}%}%1~'
+		instant_prompt+='%{%K{default}%F{blue}%}'
+		instant_prompt+='%{%f%}% '
+		instant-zsh-pre "$instant_prompt"
+
+	# Unset instant if source file not found
+	else
+		instant=0
+	fi
 fi
 
 
@@ -40,14 +46,15 @@ if ((profile)); then
 	}
 fi
 
-
 # Setup compinit directory
 [[ -z $ZSH_COMPDIR ]] && export ZSH_COMPDIR=~/.config/zsh/zcompdir
-mkdir -p $ZSH_COMPDIR
-export ZSH_COMPDUMP=$ZSH_COMPDIR/$(hostname --long)
+mkdir -p "$ZSH_COMPDIR" &> /dev/null
+export ZSH_COMPDUMP="$ZSH_COMPDIR/$(hostname --long)"
 autoload -U compinit
 _comp_options+=(globdots)
-compinit -i -C -d "${ZSH_COMPDUMP}"
+compinit -i -C -d "$ZSH_COMPDUMP"
+
+autoload colors && colors
 
 # Use plugins
 plugins=(auto my-zsh)
@@ -76,5 +83,7 @@ source $HOME/.zsh/zplugin
 # INSTANT ZSH PROMPT
 # ==============================================================================
 # Must be called at the end of file
-((instant)) && instant-zsh-post
+if ((instant)); then
+	instant-zsh-post
+fi
 
