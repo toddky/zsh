@@ -1,19 +1,35 @@
 
-# --- Directory Stat ---
-alias d='dirs -v'
-function c() { cd -$1; }
+# ==============================================================================
+# ALIASES
+# ==============================================================================
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias -g ......='../../../../..'
 
-# --- Aliases ---
+alias -- -='cd -'
+alias 1='cd -'
+alias 2='cd -2'
+alias 3='cd -3'
+alias 4='cd -4'
+alias 5='cd -5'
+alias 6='cd -6'
+alias 7='cd -7'
+alias 8='cd -8'
+alias 9='cd -9'
+
 alias cd='cd -P'
 alias cdpwd='cd $PWD 2>/dev/null || cd $(pwd) 2>/dev/null && pwd'
 alias cdtemp='cd $(mktemp -d)'
 alias cdl='cd $(command ls -t | head -n 1)'
 alias cdgit='cd $(git rev-parse --show-toplevel)'
 
+alias d='dirs -v'
 
 # ==============================================================================
 # FUNCTIONS
 # ==============================================================================
+function c() { cd -$1; }
 function cdd() {
 	cd $(dirname $(readlink -f $1))
 }
