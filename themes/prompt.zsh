@@ -31,10 +31,6 @@ zle -N edit-command-line
 #}
 #PERIODIC=60
 
-# --- Set $PROMPT and $RPROMPT ---
-PROMPT='$(build_prompt)'
-#RPROMPT='$(build_rprompt)'
-
 
 # ==============================================================================
 # POWERLINE FUNCTIONS

@@ -3,6 +3,31 @@ local here=${0:h}
 source $here/prompt.zsh
 
 # ==============================================================================
+# SETTINGS
+# ==============================================================================
+setopt prompt_subst
+autoload colors && colors
+
+# Set $PROMPT and $RPROMPT
+PROMPT='$(build_prompt)'
+#RPROMPT='$(build_rprompt)'
+
+# Symbols
+# - Find more on Wikibooks:
+#   https://en.wikibooks.org/wiki/Unicode/List_of_useful_symbols
+_ZSH_PROMPT=❱
+_ZSH_LEFT_SEPARATOR=
+_ZSH_RIGHT_SEPARATOR=
+_ZSH_GIT_BRANCH=
+_ZSH_GIT_PUSH=↑
+_ZSH_GIT_PULL=↓
+_ZSH_DOT=•
+_ZSH_STAR_HOLLOW=☆
+_ZSH_STAR_SOLID=★
+_ZSH_DEGREE=°
+
+
+# ==============================================================================
 # HOOKS
 # ==============================================================================
 
@@ -78,6 +103,7 @@ function precmd() {
 	#_autonotify
 }
 
+
 # ==============================================================================
 # PERFORMANCE
 # ==============================================================================
@@ -85,7 +111,6 @@ function pperf() {
 	_perf preexec
 	_perf precmd
 	_perf build_prompt
-	_perf build_rprompt
 }
 
 function _perf() {
@@ -103,53 +128,27 @@ function _set-title() {
 function _prompt-git-version() {
 	git -C $here log -1 --format=%H 2>/dev/null || echo none
 }
-# Get prompt version
-export PROMPT_VERSION=$(git -C $here log -1 --format=%H 2>/dev/null || echo none)
+export PROMPT_VERSION=$(_prompt-git-version)
 
 # Disable right prompt
 alias nor="function _rprompt-git(){}; function _prompt-git(){};"
 
 
 # ==============================================================================
-# SYMBOLS
-# ==============================================================================
-# Find more on Wikibooks:
-# https://en.wikibooks.org/wiki/Unicode/List_of_useful_symbols
-_ZSH_PROMPT=❱
-_ZSH_LEFT_SEPARATOR=
-_ZSH_RIGHT_SEPARATOR=
-_ZSH_GIT_BRANCH=
-_ZSH_GIT_PUSH=↑
-_ZSH_GIT_PULL=↓
-_ZSH_DOT=•
-_ZSH_STAR_HOLLOW=☆
-_ZSH_STAR_SOLID=★
-_ZSH_DEGREE=°
-
-
-# ==============================================================================
 # $PROMPT
 # ==============================================================================
-setopt prompt_subst
 
 # --- Prompt Status ---
-# Status: Error?, Root?, Background Jobs?
+# Status: Root?, Background Jobs?
 function _prompt-status() {
 	local symbols
-	if [[ -n $POWERLINE ]]; then
-		#(( $RETVAL == 0 )) && symbols+="${green}✔" || symbols+="${red}✘"
-		[[ $UID -eq 0 ]] && symbols+="${yellow}⚡"
-		[[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="${cyan}⚙"
-	else
-		#(( $RETVAL == 0 )) && symbols+="${green}0" || symbols+="${red}X"
-		[[ $UID -eq 0 ]] && symbols+="${yellow}Z"
-		[[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="${cyan}B"
-	fi
-	_prompt-bg-fg black default "$symbols"
+	_prompt-bg black
+	[[ $UID -eq 0 ]] && symbols+="${yellow}⚡"
+	[[ $(jobs -l | wc -l) -gt 0 ]] && echo "%{%F{cyan}%}[$(jobs -l | wc -l)] "
 }
 
 # --- Build Prompt ---
-build_prompt() {
+function build_prompt() {
 	_prompt-start
 	PROMPT_BG='NONE'
 	_prompt-bg black
@@ -157,22 +156,5 @@ build_prompt() {
 	$here/host.bash
 	[[ $PROMPT_VERSION == $(_prompt-git-version) ]] || echo -n $_ZSH_DEGREE
 	$here/git.bash
-}
-
-
-# ==============================================================================
-# $RPROMPT
-# ==============================================================================
-
-# --- Right Prompt Elapsed Time ---
-function _rprompt-time() {
-	_rprompt-bg-fg blue white $(_elapsed-time)
-}
-
-# --- Build Right Prompt ---
-build_rprompt() {
-	#_rprompt-start
-	#_rprompt-git
-	#_rprompt-time
 }
 
