@@ -54,7 +54,6 @@ load-once colordiff/colordiff
 load-once gnu/emacs/26.1
 load-once gnu/gawk/4.1.1
 load-once gnu/tmux/3.0
-load-once greer/silversearcher/1.0.2
 load-once jonas/tig/2.0.3
 load-once stedolan/jq/1.5
 load-once vim/vim/8.2

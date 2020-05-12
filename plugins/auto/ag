@@ -3,7 +3,12 @@
 
 cmd=$0
 if ! (hash $cmd &>/dev/null); then
-	module load meld/meld/3.20.1
+	if [[ -d /arm/tools ]]; then
+		module load greer/silversearcher
+	else
+		echo "ag not installed, please run:"
+		echo "sudo  apt-get install silversearcher-ag"
+	fi
 fi
 unfunction $cmd
 $cmd $@

@@ -3,27 +3,31 @@
 # FUNCTIONS
 # ==============================================================================
 function burstload() {
-	local git_top
+	local git_top new_top
 	local default_top=/projects/pd/pj00311_burst/users/todyam01/tools-dev
 
-	# Unload existing burst
-	if (which burst &>/dev/null); then
-		top=$(dirname $(dirname $(\which burst)))
-		echo module unload $top/modulefile
-		module unload $top/modulefile
-	fi
-
-	# Load burst
-	git_top=$(git rev-parse --show-toplevel 2>/dev/null)
+	# Get git top
+	git_top="$(git rev-parse --show-toplevel 2>/dev/null)"
 	if [[ -f $git_top/bin/burst ]]; then
-		top=$git_top
+		new_top="$git_top"
 	else
-		top=$default_top
+		new_top="$default_top"
 	fi
 
-	module load $top/modulefile
+	# Unload existing burst
+	if (whence -p burst &>/dev/null); then
+		local burstbin
+		burstbin="$(whence -c -p burst 2>/dev/null)"
+		top="$(dirname "$(dirname "$burstbin")")"
+		if [[ "$top" != "$git_top" ]]; then
+			module unload "$top/modulefile"
+		fi
+	fi
+
+	# Load modulefile
+	module load "$new_top/modulefile"
 	#echo "BURST_ROOT=$BURST_ROOT"
-	which burst
+	whence -c -p burst
 }
 
 
