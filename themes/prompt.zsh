@@ -3,9 +3,6 @@
 # PROMPT SETTINGS
 # ==============================================================================
 
-# TODO: Investigate vim=mode:
-# https://dustri.org/b/my-zsh-configuration.html#show-vim-mode-in-you-prompt
-
 # --- Redraw on Resize ---
 # redrawing while using the zsh-users/zsh-syntax-highlighting plugin crashes
 #function TRAPWINCH() {
@@ -13,8 +10,13 @@
 #}
 
 # --- Redraw on Keymap Select ---
-function zle-keymap-select() { zle reset-prompt; }
+function zle-keymap-select() {
+	export ZSH_KEYMAP=$KEYMAP
+	zle reset-prompt
+	zle -R
+}
 zle -N zle-keymap-select
+
 zle -N edit-command-line
 
 # --- Redraw Every Minute ---

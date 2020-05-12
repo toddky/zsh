@@ -2,6 +2,8 @@
 
 foreground=white
 host='@%m'
+username='%n'
+username='todd'
 [[ -n $LSB_BATCH_JID ]] && { foreground=yellow; host="@$LSB_BATCH_JID"; }
 [[ -e ${TMUX%%,*} ]] && { foreground=green; host=""; }
 
@@ -10,7 +12,7 @@ function prompt-fg() {
 	local fg="%{%F{$1}%}"
 	shift && echo -n "${fg/\%F\{reset\}/%f}$@"
 }
-prompt-fg $foreground "%n$host"
+prompt-fg $foreground "$username$host"
 
 # NOT USED: Print project status
 exit

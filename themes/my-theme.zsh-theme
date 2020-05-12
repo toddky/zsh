@@ -28,7 +28,9 @@ function preexec() {
 	# Set $DISPLAY
 	local old_display="$DISPLAY"
 	DISPLAY="$($here/find-display.bash 2>/dev/null)"
-	[[ "$DISPLAY" != "$old_display" ]] && echo -e "\x1b[38;5;8m\$DISPLAY='$DISPLAY'\e[0m"
+	if [[ "$DISPLAY" != "$old_display" ]]; then
+		\echo -e "\x1b[38;5;8m\$DISPLAY='$DISPLAY'\e[0m"
+	fi
 
 	# Set powerline
 	_set-powerline

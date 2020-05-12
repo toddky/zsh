@@ -73,12 +73,31 @@ git rev-parse --is-inside-work-tree &>/dev/null && prompt-git
 # ==============================================================================
 # DIRECTORY
 # ==============================================================================
-# Background:
-# Blue:   Username in path
-# Cyan:   Username not in path
+
+# Get directory background color
+# Blue:    Username in path
+# Cyan:    Username not in path
 # Red:     Bad permissions
 # Magenta: vicmd mode
+function dir-background() {
+	if [[ $ZSH_KEYMAP == vicmd ]]; then
+		echo -n magenta
+		return 0
+	elif ! (stat -c %n . &>/dev/null); then
+		echo -n red
+		return 0
+	elif [[ ! $PWD =~ $(whoami) ]]; then
+		echo -n cyan
+		return 0
+	else
+		echo -n blue
+		return 0
+	fi
+}
+#prompt-bg $(dir-background) &
+prompt-bg $(dir-background)
 
+# Calculate permissions
 function dir-permission() {
 	local access me my_groups default=white
 	local user_fg=$default group_fg=$default world_fg=$default
@@ -97,13 +116,11 @@ function dir-permission() {
 	# World permission
 	prompt-fg $world_fg $(echo $access | rev | cut -b 1)
 }
-
-background=blue
-[[ $PWD =~ $(whoami) ]] || background=cyan
 permission=$(dir-permission)
-[[ -n $permission ]] || background=red
-[[ $KEYMAP == vicmd ]] && background=magenta
-prompt-bg-fg $background white $permission "%1~"
+
+#wait
+prompt-fg white $permission "%1~"
+#PROMPT_BG=$(dir-background)
 prompt-bg-fg reset reset
-[[ -n $POWERLINE ]] || echo -n "$no_color "
+[[ -n $POWERLINE ]] || echo -n "$no_color"
 
