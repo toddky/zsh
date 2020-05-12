@@ -1,6 +1,5 @@
 
 local here=${0:h}
-source $here/display.zsh
 source $here/prompt.zsh
 
 # ==============================================================================
@@ -27,9 +26,9 @@ function _autonotify() {
 function preexec() {
 
 	# Set $DISPLAY
-	local old_display=$DISPLAY
-	_set-display $(_find-display)
-	[[ $DISPLAY != $old_display ]] && echo -e "\x1b[38;5;8m\$DISPLAY=$DISPLAY\e[0m"
+	local old_display="$DISPLAY"
+	DISPLAY="$($here/find-display.bash 2>/dev/null)"
+	[[ "$DISPLAY" != "$old_display" ]] && echo -e "\x1b[38;5;8m\$DISPLAY='$DISPLAY'\e[0m"
 
 	# Set powerline
 	_set-powerline
