@@ -125,10 +125,10 @@ function build_prompt() {
 	_prompt-bg black
 
 	# Check root
-	[[ $UID -eq 0 ]] && echo "%{%F{yellow}%}⚡"
+	[[ $UID -eq 0 ]] && echo -n "%{%F{yellow}%}⚡"
 
 	# Backgrounnd job count
-	[[ $(jobs -l | wc -l) -gt 0 ]] && echo "%{%F{cyan}%}[$(jobs -l | wc -l)] "
+	[[ $(jobs -l | wc -l) -gt 0 ]] && echo -n "%{%F{cyan}%}[$(jobs -l | wc -l)] "
 
 	# Run scripts to generate prompts
 	$here/host.bash 2>/dev/null
