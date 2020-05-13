@@ -63,6 +63,7 @@ if [[ $(hostname --long) =~ arm.com$ ]]; then
 fi
 plugins+=(bin cd vim xclip tmux vi-mode regex math setup git svn emacs)
 plugins+=(fzf)
+(hash lpass &>/dev/null)&&  plugins+=(lpass)
 
 # Uncomment options for debug
 #setopt XTRACE
