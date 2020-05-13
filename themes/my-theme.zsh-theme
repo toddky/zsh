@@ -60,6 +60,10 @@ function preexec() {
 	# Set powerline
 	_set-powerline
 
+	# Set title
+	#title='title'
+	#print -Pn "\e]0;$title\a"
+
 	# Enable tmux monitor
 	[[ -e ${TMUX%%,*} ]] && tmux set-window monitor-activity on
 
@@ -105,56 +109,30 @@ function precmd() {
 
 
 # ==============================================================================
-# PERFORMANCE
+# $PROMPT
 # ==============================================================================
-function pperf() {
-	_perf preexec
-	_perf precmd
-	_perf build_prompt
-}
-
-function _perf() {
-	local _start_ms=$(date +%s%3N)
-	$@ > /dev/null
-	echo "$1: $(($(date +%s%3N)-$_start_ms))"
-}
-
-# --- Set Title ---
-function _set-title() {
-	print -Pn "\e]0;$@\a"
-}
-
-# --- Set Prompt Version ---
 function _prompt-git-version() {
 	git -C $here log -1 --format=%H 2>/dev/null || echo none
 }
 export PROMPT_VERSION=$(_prompt-git-version)
 
-# Disable right prompt
-alias nor="function _rprompt-git(){}; function _prompt-git(){};"
-
-
-# ==============================================================================
-# $PROMPT
-# ==============================================================================
-
-# --- Prompt Status ---
-# Status: Root?, Background Jobs?
-function _prompt-status() {
-	local symbols
-	_prompt-bg black
-	[[ $UID -eq 0 ]] && symbols+="${yellow}⚡"
-	[[ $(jobs -l | wc -l) -gt 0 ]] && echo "%{%F{cyan}%}[$(jobs -l | wc -l)] "
-}
 
 # --- Build Prompt ---
 function build_prompt() {
-	_prompt-start
+	RETVAL=$?
+
 	PROMPT_BG='NONE'
 	_prompt-bg black
-	_prompt-status
-	$here/host.bash
+
+	# Check root
+	[[ $UID -eq 0 ]] && echo "%{%F{yellow}%}⚡"
+
+	# Backgrounnd job count
+	[[ $(jobs -l | wc -l) -gt 0 ]] && echo "%{%F{cyan}%}[$(jobs -l | wc -l)] "
+
+	# Run scripts to generate prompts
+	$here/host.bash 2>/dev/null
 	[[ $PROMPT_VERSION == $(_prompt-git-version) ]] || echo -n $_ZSH_DEGREE
-	$here/git.bash
+	$here/git.bash 2>/dev/null
 }
 

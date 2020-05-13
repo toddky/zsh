@@ -69,19 +69,6 @@ function _prompt-bg-fg() {
 	shift && _prompt-fg $@
 }
 
-# --- Prompt Start ---
-function _prompt-start() {
-	RETVAL=$?
-	if [[ -n $POWERLINE ]]; then
-		local LC_ALL="" LC_CTYPE="en_US.UTF-8"
-		PROMPT_SEPARATOR=$'\ue0b0'
-		RPROMPT_SEPARATOR=$'\ue0b2'
-	else
-		PROMPT_SEPARATOR=' '
-		RPROMPT_SEPARATOR=' '
-	fi
-}
-
 # --- Prompt End ---
 function _prompt-end() {
 	_prompt-bg-fg reset reset
