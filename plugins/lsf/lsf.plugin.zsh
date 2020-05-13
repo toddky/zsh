@@ -22,7 +22,11 @@ alias bs80='bs -M 81920000'
 alias bs128='bs -M 131072000'
 alias bs256='bs -M 262144000'
 
-alias bszsh='bs16 -rn -app FG -Is -XF zsh'
+if [[ -f /arm/tools/setup/bin/mrun ]]; then
+	alias bszsh='bs16 -rn -app FG -Is -XF /arm/tools/setup/bin/mrun +zsh/zsh/5.7.1 zsh'
+else
+	alias bszsh='bs16 -rn -app FG -Is -XF zsh'
+fi
 alias bsbash='bs16 -rn -app FG -Is -XF bash'
 alias bsshell='bs16 -rn -app FG -Is -XF $SHELL'
 alias bsxterm='bs16 -rn -app FG -XF xterm'
