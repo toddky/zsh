@@ -44,6 +44,7 @@ echo "[debug] Using display file '$display_file'" 1>&2
 
 # Find display from DISPLAY file
 while read -r display; do
+	[[ -z "$display" ]] && continue
 	if ( xdpyinfo -display "$display" &>/dev/null ); then
 		#echo -e "\e[32mPASS\e[0m $display" 1>&2
 		echo "$display"
