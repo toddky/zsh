@@ -3,10 +3,8 @@
 # SETTINGS
 # ==============================================================================
 export ZSH_CUSTOM=$HOME/.zsh
-
 local profile=0
 #profile=1
-
 local instant=1
 #instant=0
 
@@ -64,6 +62,12 @@ fi
 plugins+=(bin cd vim xclip tmux vi-mode regex math setup git svn emacs)
 plugins+=(fzf)
 (hash lpass &>/dev/null)&&  plugins+=(lpass)
+
+# TODO: Investigate more plugins
+# https://github.com/zsh-vi-more/vi-motions
+
+# TODO: Checkout zsh4humans
+# https://github.com/romkatv/zsh4humans
 
 # Uncomment options for debug
 #setopt XTRACE
