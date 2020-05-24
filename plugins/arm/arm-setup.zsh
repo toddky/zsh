@@ -18,6 +18,7 @@ source $DEPOT_SETUP_ROOT/init/bash.d/modules-init
 function shopt(){}
 source $DEPOT_SETUP_ROOT/init/bash.d/shell-config
 unfunction shopt
+umask 002
 
 # --- ~/.zlogin  ---
 [[ -f ~/.zlogin ]] && source ~/.zlogin
