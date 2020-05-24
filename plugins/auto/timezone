@@ -1,0 +1,23 @@
+
+# vim: ft=zsh
+
+# A simple function: Time lookup for timezone (w/completion)
+# https://www.reddit.com/r/zsh/comments/fgzptb/a_simple_function_time_lookup_for_timezone/
+
+unfunction $0
+zmodload zsh/datetime
+compdef _time_zone timezone
+
+function timezone(){
+	emulate -L zsh
+	local localday remote prefix
+	strftime -s localday '%w'
+	TZ=$1 strftime -s remote '%w %a %T'
+	case $((${remote%% *} - localday)) in
+		0)    prefix="Today" ;;
+		1|-6) prefix="Tomorrow" ;;
+		-1|6) prefix="Yesterday"
+	esac
+	print "$prefix, ${remote#* }"
+}
+
