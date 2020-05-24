@@ -3,9 +3,14 @@
 
 # Autoload burst command
 local top=/projects/pd/pj00311_burst/users/todyam01/tools-dev
-if ! (hash burst &>/dev/null); then
+cmd=burst
+if ! (hash $cmd &>/dev/null); then
 	module load $top/modulefile
 fi
-unfunction burst
-burst $@
+if (hash $cmd &>/dev/null); then
+	unfunction $cmd
+	$cmd $@
+else
+	echo "ERROR: $cmd not found" 1>&2
+fi
 

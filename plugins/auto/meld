@@ -5,6 +5,10 @@ cmd=$0
 if ! (hash $cmd &>/dev/null); then
 	module load meld/meld
 fi
-unfunction $cmd
-$cmd $@
+if (hash $cmd &>/dev/null); then
+	unfunction $cmd
+	$cmd $@
+else
+	echo "ERROR: $cmd not found" 1>&2
+fi
 

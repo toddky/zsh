@@ -1,10 +1,15 @@
 
 # vi: ft=zsh
 
-if ! (hash acroread &>/dev/null); then
+cmd=acroread
+if ! (hash $cmd &>/dev/null); then
 	module load adobe/acrobat/8.1.3
 fi
-unfunction pdf
-alias pdf='acroread'
-acroread $@
+if (hash $cmd &>/dev/null); then
+	unfunction pdf
+	alias pdf=$cmd
+	$cmd $@
+else
+	echo "ERROR: $cmd not found" 1>&2
+fi
 

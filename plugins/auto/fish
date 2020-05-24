@@ -3,8 +3,10 @@
 
 cmd=$0
 if ! (hash $cmd &>/dev/null); then
-	load-once fish/fish-shell
+	module load fish/fish-shell
 fi
-unfunction $cmd
+if (hash $cmd &>/dev/null); then
+	unfunction $cmd
+fi
 $cmd $@
 
