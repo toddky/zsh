@@ -24,3 +24,15 @@ Host ds-gerrit
 	HostName ds-gerrit.euhpc.arm.com
 SSH_CONFIG
 
+# Fix home directory permissions
+chmod +x $HOME
+chmod g-w $HOME
+
+# Hope this works
+echo
+echo 'Testing ssh...'
+echo '$> ssh login1 hostname --long'
+if ! (ssh -q -o "BatchMode=yes" -o "ConnectTimeout=3" login1 "hostname --long"); then
+	echo 'FAILED!'
+fi
+
