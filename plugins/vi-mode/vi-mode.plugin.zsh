@@ -44,10 +44,11 @@ function vi-xclip-paste() {
 	LBUFFER="$LBUFFER$(xclip -o)"
 }
 
-zle -N clear-on-empty-buffer
 function clear-on-empty-buffer() {
+	ZSH_KEYMAP=main
 	[[ -z $BUFFER ]] && zle clear-screen || zle accept-line
 }
+zle -N clear-on-empty-buffer
 
 zle -N vi-my-backward-kill-word
 function vi-my-backward-kill-word() {
