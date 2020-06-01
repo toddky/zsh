@@ -1,11 +1,12 @@
 
-# --- Run Latest zsh ---
+# ==============================================================================
+# RUN LATEST ZSH
+# ==============================================================================
 # This is a stupid hack that will probably break and cause infinite recursion
 if [[ -n $PROMPT && -d /arm/tools/ ]]; then
 
 	rhe=$(lsb_release -rs | cut -f1 -d.)
 	if [[ $rhe == 6 ]]; then
-		#PATH=/arm/tools/zsh/zsh/5.0.2/rhe6-x86_64/bin:$PATH
 		PATH="/arm/tools/zsh/zsh/5.7.1/rhe6-x86_64/bin:$PATH"
 	elif [[ $rhe == 7 ]]; then
 		PATH="/arm/tools/zsh/zsh/5.7.1/rhe7-x86_64/bin:$PATH"
@@ -17,18 +18,25 @@ if [[ -n $PROMPT && -d /arm/tools/ ]]; then
 	fi
 fi
 
-# --- Set Environment Variables ---
+
+# ==============================================================================
+# ENVIRONMENT
+# ==============================================================================
 export PAGER='less -r'
 export TERM=xterm-256color
+export XDG_CONFIG_HOME=$HOME/.config
 
-# --- Display Setup ---
-if [[ -n $DISPLAY ]]; then
-	grep ${DISPLAY} $HOME/.DISPLAY &>/dev/null || echo $DISPLAY >> $HOME/.DISPLAY
+# Display settings
+if [[ -n "$DISPLAY" ]]; then
+	grep "$DISPLAY" $XDG_CONFIG_HOME/DISPLAY &>/dev/null || echo "$DISPLAY" >> $XDG_CONFIG_HOME/DISPLAY
 fi
 export DISPLAY_orig="$DISPLAY"
-[[ -n $VNCDESKTOP ]] && export DISPLAY_vnc=$DISPLAY
+[[ -n "$VNCDESKTOP" ]] && export DISPLAY_vnc="$DISPLAY"
 
-# --- Terminal Line Settings ---
+
+# ==============================================================================
+# SETTINGS
+# ==============================================================================
 # Disable XON/XOFF flow control
 # Fixes Ctrl-s causing Vim to hang
 stty -ixon 2>/dev/null
