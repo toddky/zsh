@@ -3,6 +3,11 @@
 # SETUP
 # ==============================================================================
 # Check fzf
+if ! (hash fzf &>/dev/null); then
+	if [[ -d $HOME/.fzf/bin ]]; then
+		export PATH=$HOME/.fzf/bin:$PATH
+	fi
+fi
 hash fzf &>/dev/null || return
 
 local here=${0:h}
@@ -17,10 +22,6 @@ export MANPATH=$fzfpath/man:$MANPATH
 # ==============================================================================
 # KEY BINDINGS
 # ==============================================================================
-
-# History search
-bindkey -M viins "^J" history-substring-search-down
-bindkey -M viins "^K" history-substring-search-up
 
 # History search
 bindkey -M vicmd '^R' my-fzf-history
