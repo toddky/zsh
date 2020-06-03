@@ -29,41 +29,41 @@ function prompt-bg-fg() {
 # GIT
 # ==============================================================================
 function prompt-git() {
-	# Check blacklist
-	url=$(git config --get remote.origin.url 2>/dev/null) || exit
+
+	# Get URL and branch
+	url="$(git config --get remote.origin.url 2>/dev/null)"
+	branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+
 	blacklist=(
-		ssh://hw-gerrit.nahpc.arm.com:29418/systems/porter
-		ssh://ds-gerrit.euhpc.arm.com:29418/svos/linux
 		ssh://ds-gerrit.euhpc.arm.com:29418/svos/apps
-		ssh://hw-gerrit.nahpc.arm.com:29418/cores/ares
+		ssh://ds-gerrit.euhpc.arm.com:29418/svos/linux
 		ssh://hw-gerrit.euhpc.arm.com:29418/systems/amis
+		ssh://hw-gerrit.nahpc.arm.com:29418/cores/ares
+		ssh://hw-gerrit.nahpc.arm.com:29418/systems/porter
 	)
 
-	# Print branch name for blacklist
-	branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+	# Print basic branch information for blacklist
 	if [[ " ${blacklist[@]} " =~ " $url " ]]; then
 		prompt-fg white " $branch"
-		exit
-
-	# Print detailed git information
-	else
-		{
-			foreground=green
-			git rev-parse @{u} &>/dev/null || foreground=cyan
-			git diff-index --quiet HEAD 2>/dev/null || foreground=red
-			prompt-fg "$foreground" " $branch"
-		} &
-
-		{
-			stat=$(git status -sb -uno 2>/dev/null | head -1)
-			ahead=$(echo $stat | sed -n 's/.*ahead \([0-9]\+\).*/ +\1/p')
-			behind=$(echo $stat | sed -n 's/.*behind \([0-9]\+\).*/ -\1/p')
-
-			wait
-			prompt-fg yellow "$ahead"
-			prompt-fg red "$behind"
-		}
+		return
 	fi
+
+	# Print branch
+	{
+		foreground=green
+		git rev-parse @{u} &>/dev/null || foreground=cyan
+		git diff-index --quiet HEAD 2>/dev/null || foreground=red
+		prompt-fg "$foreground" " $branch"
+	} &
+
+	# Get detailed status
+	stat=$(git status -sb -uno 2>/dev/null | head -1)
+	ahead=$(echo $stat | sed -n 's/.*ahead \([0-9]\+\).*/ +\1/p')
+	behind=$(echo $stat | sed -n 's/.*behind \([0-9]\+\).*/ -\1/p')
+
+	wait
+	prompt-fg yellow "$ahead"
+	prompt-fg red "$behind"
 }
 
 # Exit unless running in git
