@@ -93,3 +93,11 @@ function pastebin() {
 	#'awk '"'"'BEGIN{print "paste_text=$("} {print} END{print ")"}'"'"' | curl -X POST --netrc-file ~/.netrc -s --data-binary @- http://p.arm.com | grep -o "http[^\"]*" | xclip && xclip -o'
 }
 
+function module_download() {
+	/arm/tools/setup/bin/mrun +sysadm +arm/depot-build/2.05 depot fetch $@
+}
+
+function module_install() {
+	ssh depot-admin /arm/tools/setup/bin/mrun +sysadm +arm/depot-build/2.05 depot install $@
+}
+
