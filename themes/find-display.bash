@@ -7,6 +7,13 @@ function check_display() {
 	xdpyinfo -display "$1" &>/dev/null
 }
 
+# Check xdpyinfo
+if ! (which xdpyinfo &>/dev/null); then
+	echo "[debug] xdpyinfo command not found" 1>&2
+	echo $DISPLAY
+	exit
+fi
+
 # Check $DISPLAY_force
 if [[ -n "$DISPLAY_force" ]]; then
 	if (check_display "$DISPLAY_force"); then
