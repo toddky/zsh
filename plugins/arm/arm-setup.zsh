@@ -1,7 +1,11 @@
 
 # Always define module function
 function module() {
-	eval `/arm/tools/tct/tcl/8.5.2/rhe7-x86_64/bin/tclsh /arm/tools/setup/lib/modulecmd.tcl bash $*`
+	local tcl rhe processor
+	rhe=$(lsb_release -r | sed 's/Release:\s\+\([0-9]\).*/\1/')
+	processor=$(uname -p)
+	tcl="/arm/tools/tct/tcl/8.5.2/rhe${rhe}-${processor}/bin/tclsh"
+	eval `$tcl /arm/tools/setup/lib/modulecmd.tcl bash $*`
 }
 
 # Check if already loaded
