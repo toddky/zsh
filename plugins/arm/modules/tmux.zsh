@@ -52,3 +52,15 @@ function twindow-ssh-euhpc2() {
 	tmux select-layout tiled
 }
 
+function twindow-ssh-nasce() {
+	tmux new-window -n "nasce" ssh login1.sce01.na02.arm.com
+	tsplit-ssh login2.sce01.na02.arm.com
+	tsplit-ssh login3.sce01.na02.arm.com
+	tsplit-ssh login4.sce01.na02.arm.com
+	tsplit-ssh login5.sce01.na02.arm.com
+	tsplit-ssh login6.sce01.na02.arm.com
+	tsplit-ssh login7.sce01.na02.arm.com
+	tsplit-ssh login8.sce01.na02.arm.com
+	tmux select-layout tiled
+}
+

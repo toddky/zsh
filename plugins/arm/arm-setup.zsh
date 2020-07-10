@@ -1,4 +1,9 @@
 
+# Always define module function
+function module() {
+	eval `/arm/tools/tct/tcl/8.5.2/rhe7-x86_64/bin/tclsh /arm/tools/setup/lib/modulecmd.tcl bash $*`
+}
+
 # Check if already loaded
 ((_ARM_SETUP_LOADED)) && return
 export _ARM_SETUP_LOADED=1
