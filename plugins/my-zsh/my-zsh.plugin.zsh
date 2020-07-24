@@ -80,7 +80,7 @@ alias .tar.bz2='tar xjf'
 alias .tar.gz='tar xzf'
 
 
-alias l='ls -lah'
+alias l='ls -lAh'
 alias ll='ls -lrth'
 alias lll='ll | grep "\->"'
 alias lsd='ls -dl */'

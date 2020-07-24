@@ -8,6 +8,13 @@
 setopt correct
 export SPROMPT="Use $fg_bold[green]%r$reset_color instead of $fg_bold[red]%R$reset_color? "
 
+# ==============================================================================
+# LS_COLORS
+# ==============================================================================
+if [[ $HOME/.LS_COLORS ]]; then
+	eval $(dircolors -b $HOME/.LS_COLORS)
+fi
+
 
 # ==============================================================================
 # MISCELLANEOUS
