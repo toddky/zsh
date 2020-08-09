@@ -34,18 +34,19 @@ function prompt-git() {
 	url="$(git config --get remote.origin.url 2>/dev/null)"
 	branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
 
-	blacklist=(
+	large_repos=(
 		ssh://ds-gerrit.euhpc.arm.com:29418/svos/apps
 		ssh://ds-gerrit.euhpc.arm.com:29418/svos/linux
 		ssh://hw-gerrit.euhpc.arm.com:29418/systems/amis
 		ssh://hw-gerrit.nahpc.arm.com:29418/cores/ares
 		ssh://hw-gerrit.nahpc.arm.com:29418/systems/porter
+		ssh://nasce-gerrit-1.sce01.na02.arm.com:29418/mirrors/na-gerrit-1.nahpc.arm.com/cores/ares
 	)
 
-	# Print basic branch information for blacklist
-	if [[ " ${blacklist[@]} " =~ " $url " ]]; then
+	# Print basic branch information for large repos
+	if [[ " ${large_repos[@]} " =~ " $url " ]]; then
 		prompt-fg white " $branch"
-		return
+		return 0
 	fi
 
 	# Print branch
