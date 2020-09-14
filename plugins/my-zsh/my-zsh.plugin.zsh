@@ -59,7 +59,6 @@ alias tab2="expand -t2"
 alias tab4="expand -t4"
 alias tab8="expand -t8"
 alias cutw='cut -c 1-$COLUMNS'
-alias xterm='xterm -fg white -bg black -fa consolas -fs 10'
 
 alias lns='ln -s'
 alias lnsf='ln -sf'
