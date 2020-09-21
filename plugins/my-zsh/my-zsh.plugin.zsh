@@ -78,7 +78,6 @@ alias .tar='tar xf'
 alias .tar.bz2='tar xjf'
 alias .tar.gz='tar xzf'
 
-
 alias l='ls -lAh'
 alias ll='ls -lrth'
 alias lll='ll | grep "\->"'
@@ -102,8 +101,39 @@ alias du1='du --max-depth=1'
 alias du2='du --max-depth=2'
 alias du3='du --max-depth=3'
 
+
+# ==============================================================================
+# FUNCTIONS
+# ==============================================================================
+
+# Grep URLs
+# https://github.com/salman-abedin/puri/blob/master/puri.sh
+function gurl() {
+	grep -Pzo '(http|https)://[a-zA-Z0-9+&@#/%?=~_|!:,.;-]*\n*[a-zA-Z0-9+&@#/%?=~_|!:,.;-]*' "$@" |
+	tr -d '\n' |
+	sed -e 's/http/\nhttp/g' -e 's/$/\n/' |
+	sed '1d' | sort -u
+}
+
 alias ascii='man ascii'
 
+# which
+function catw() {
+	local file
+	file="$(whence -c $1)"
+	if (bat -h &>/dev/null); then
+		bat "$file"
+	else
+		echo "$file"
+		echo '================================================================================'
+		cat -n "$file"
+	fi
+}
+function viw() {
+	vi "$(whence -c $1)"
+}
+
+# TODO: Move this to autoload
 which colordiff &> /dev/null && alias diff='colordiff -w'
 
 alias suu='su $(whoami)'
@@ -139,6 +169,11 @@ function cp1() {
 	local dir=$1
 	mkdir $(basename $dir)
 	cp $dir/* $(basename $dir)
+}
+
+# TODO: Fix this
+function xargsi() {
+	xargs -I% sh -c "$@"
 }
 
 # --- Colors ---
