@@ -12,6 +12,8 @@ for f in $here/*; do
 	b="$(basename "$f")"
 	[[ "$b" =~ '^_' ]] && continue
 	[[ "$b" =~ '\.zsh$' ]] && continue
-	autoload $b
+	autoload -Uz $b
 done
+unset f
+unset b
 
