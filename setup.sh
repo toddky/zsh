@@ -36,3 +36,6 @@ for file in zlogin zprofile zshenv zshrc bash_profile; do
 	ln -sf $newpath $link
 done
 
+# Update submodules
+git -C "$CURRENT_DIR" submodule update --init --remote --recursive
+
