@@ -1,0 +1,3 @@
+[submodule "plugins/arm"]
+	path = plugins/arm
+	url = git@github.com:toddyamakawa/zsh-arm
