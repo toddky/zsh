@@ -1,6 +1,13 @@
 
 # vi: ft=zsh
 
+# Use `rg` if available
+if (rg --help &>/dev/null); then
+	alias ag=rg
+	unfunction $cmd
+	return
+fi
+
 cmd=$0
 if ! (hash $cmd &>/dev/null); then
 	if [[ -d /arm/tools ]]; then
