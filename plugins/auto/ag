@@ -1,6 +1,8 @@
 
 # vi: ft=zsh
 
+cmd=$0
+
 # Use `rg` if available
 if (rg --help &>/dev/null); then
 	alias ag=rg
@@ -8,7 +10,6 @@ if (rg --help &>/dev/null); then
 	return
 fi
 
-cmd=$0
 if ! (hash $cmd &>/dev/null); then
 	if [[ -d /arm/tools ]]; then
 		module load greer/silversearcher
