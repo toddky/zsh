@@ -3,23 +3,36 @@
 # Set permissions
 umask 077
 
-# SSH directory
-SSH_DIR=~/.ssh
-[[ -d $SSH_DIR ]] && { echo "$SSH_DIR already exists!"; exit 1; }
-mkdir -pv $SSH_DIR
+# Check SSH directory
+SSH_DIR="$HOME/.ssh"
+if [[ -d "$SSH_DIR" ]]; then
+	echo -e "\e[31;1mWARNING: '$SSH_DIR' already exists!\e[0m"
+	echo "Do you wish to continue?"
+	select yes_no in "Yes (backup and continue)" "No"; do
+		case "$yes_no" in
+			Yes*) break;;
+			No* ) exit;;
+		esac
+	done
+	echo "Moving '$SSH_DIR' to '$SSH_DIR.backup'..."
+	mv "$SSH_DIR" "$SSH_DIR.backup"
+fi
+mkdir -pv "$SSH_DIR"
 
 # Generate SSH key
 echo "Generating key..."
-ssh-keygen -f $SSH_DIR/id_rsa -N ""
+ssh-keygen -f "$SSH_DIR/id_rsa" -N ""
 cp $SSH_DIR/id_rsa.pub $SSH_DIR/authorized_keys
 
 # SSH config
 echo "Generating $SSH_DIR/config file..."
 cat >$SSH_DIR/config << SSH_CONFIG
 Host *
-StrictHostKeyChecking no
 ForwardAgent yes
 ForwardX11 yes
+ServerAliveInterval 120
+StrictHostKeyChecking no
+
 Host ds-gerrit
 	HostName ds-gerrit.euhpc.arm.com
 SSH_CONFIG
@@ -31,8 +44,8 @@ chmod g-w $HOME
 # Hope this works
 echo
 echo 'Testing ssh...'
-echo '$> ssh login1 hostname --long'
-if ! (ssh -q -o "BatchMode=yes" -o "ConnectTimeout=3" login1 "hostname --long"); then
+echo "$> ssh $(hostname) hostname --long"
+if ! (ssh -q -o "BatchMode=yes" -o "ConnectTimeout=3" "$(hostname)" "hostname --long"); then
 	echo 'FAILED!'
 fi
 
