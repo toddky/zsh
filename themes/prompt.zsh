@@ -38,7 +38,7 @@ zle -N edit-command-line
 
 # --- Check Powerline ---
 function _set-powerline() {
-	export POWERLINE=$(fc-cat $HOME/.fonts | command grep -io -m 1 powerline)
+	export POWERLINE=$(fc-cat $HOME/.fonts 2>/dev/null | command grep -io -m 1 powerline)
 }
 _set-powerline
 
