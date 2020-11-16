@@ -1,6 +1,6 @@
 
-local here=${0:h}
-source $here/prompt.zsh
+export _MYZSHTHEME=${0:h}
+source $_MYZSHTHEME/prompt.zsh
 
 # ==============================================================================
 # SETTINGS
@@ -49,10 +49,9 @@ function _autonotify() {
 
 # Executed just after a command has been read and is about to be executed.
 function preexec() {
-
 	# Set $DISPLAY
 	local old_display="$DISPLAY"
-	DISPLAY="$($here/find-display.bash 2>/dev/null)"
+	DISPLAY="$($_MYZSHTHEME/find-display.bash 2>/dev/null)"
 	if [[ "$DISPLAY" != "$old_display" ]]; then
 		\echo -e "\x1b[38;5;8m\$DISPLAY='$DISPLAY'\e[0m"
 	fi
@@ -112,7 +111,7 @@ function precmd() {
 # $PROMPT
 # ==============================================================================
 function _prompt-git-version() {
-	git -C $here log -1 --format=%H 2>/dev/null || echo none
+	git -C $_MYZSHTHEME log -1 --format=%H 2>/dev/null || echo none
 }
 export PROMPT_VERSION=$(_prompt-git-version)
 
@@ -131,8 +130,8 @@ function build_prompt() {
 	[[ $(jobs -l | wc -l) -gt 0 ]] && echo -n "%{%F{cyan}%}[$(jobs -l | wc -l)] "
 
 	# Run scripts to generate prompts
-	$here/host.bash 2>/dev/null
+	$_MYZSHTHEME/host.bash 2>/dev/null
 	[[ $PROMPT_VERSION == $(_prompt-git-version) ]] || echo -n $_ZSH_DEGREE
-	$here/git.bash 2>/dev/null
+	$_MYZSHTHEME/git.bash 2>/dev/null
 }
 
