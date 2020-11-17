@@ -130,8 +130,8 @@ function build_prompt() {
 	[[ $(jobs -l | wc -l) -gt 0 ]] && echo -n "%{%F{cyan}%}[$(jobs -l | wc -l)] "
 
 	# Run scripts to generate prompts
-	$_MYZSHTHEME/host.bash 2>/dev/null
-	[[ $PROMPT_VERSION == $(_prompt-git-version) ]] || echo -n $_ZSH_DEGREE
-	$_MYZSHTHEME/git.bash 2>/dev/null
+	[[ $PROMPT_VERSION == $(_prompt-git-version) ]] || echo -n "%{%F{red}%}$_ZSH_DEGREE"
+	$_MYZSHTHEME/prompt.bash 2>/dev/null
+
 }
 
