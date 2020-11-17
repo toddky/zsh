@@ -12,20 +12,6 @@ autoload colors && colors
 PROMPT='$(build_prompt)'
 #RPROMPT='$(build_rprompt)'
 
-# Symbols
-# - Find more on Wikibooks:
-#   https://en.wikibooks.org/wiki/Unicode/List_of_useful_symbols
-_ZSH_PROMPT=❱
-_ZSH_LEFT_SEPARATOR=
-_ZSH_RIGHT_SEPARATOR=
-_ZSH_GIT_BRANCH=
-_ZSH_GIT_PUSH=↑
-_ZSH_GIT_PULL=↓
-_ZSH_DOT=•
-_ZSH_STAR_HOLLOW=☆
-_ZSH_STAR_SOLID=★
-_ZSH_DEGREE=°
-
 
 # ==============================================================================
 # HOOKS
@@ -110,28 +96,10 @@ function precmd() {
 # ==============================================================================
 # $PROMPT
 # ==============================================================================
-function _prompt-git-version() {
-	git -C $_MYZSHTHEME log -1 --format=%H 2>/dev/null || echo none
-}
-export PROMPT_VERSION=$(_prompt-git-version)
-
-
-# --- Build Prompt ---
+export _MYZSHTHEME_VERSION="$(git -C $_MYZSHTHEME log -1 --format=%H 2>/dev/null || echo none)"
 function build_prompt() {
-	RETVAL=$?
-
-	PROMPT_BG='NONE'
-	_prompt-bg black
-
-	# Check root
-	[[ $UID -eq 0 ]] && echo -n "%{%F{yellow}%}⚡"
-
-	# Backgrounnd job count
-	[[ $(jobs -l | wc -l) -gt 0 ]] && echo -n "%{%F{cyan}%}[$(jobs -l | wc -l)] "
-
-	# Run scripts to generate prompts
-	[[ $PROMPT_VERSION == $(_prompt-git-version) ]] || echo -n "%{%F{red}%}$_ZSH_DEGREE"
+	export _MYZSHTHEME_RETVAL=$?
+	export _MYZSHTHEME_BG="$(jobs -l | wc -l)"
 	$_MYZSHTHEME/prompt.bash 2>/dev/null
-
 }
 

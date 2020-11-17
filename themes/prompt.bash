@@ -3,10 +3,26 @@
 # ==============================================================================
 # PROMPT
 # ==============================================================================
-export PROMPT_BG=$1
+export PROMPT_BG='NONE'
 #PROMPT_SEPARATOR=$'\ue0b0'
 #RPROMPT_SEPARATOR=$'\ue0b2'
 PROMPT_SEPARATOR=
+
+# Symbols
+# - Find more on Wikibooks:
+#   https://en.wikibooks.org/wiki/Unicode/List_of_useful_symbols
+SYMBOL_PROMPT=❱
+SYMBOL_LEFT_SEPARATOR=
+SYMBOL_RIGHT_SEPARATOR=
+SYMBOL_GIT_BRANCH=
+SYMBOL_GIT_PUSH=↑
+SYMBOL_GIT_PULL=↓
+SYMBOL_DOT=•
+SYMBOL_STAR_HOLLOW=☆
+SYMBOL_STAR_SOLID=★
+SYMBOL_DEGREE=°
+
+# Functions
 function prompt-fg() {
 	local fg="%{%F{$1}%}"
 	shift && echo -n "${fg/\%F\{reset\}/%f}$@"
@@ -34,7 +50,14 @@ username='%n'
 username='todd'
 [[ -n $LSB_BATCH_JID ]] && { foreground=yellow; host="@$LSB_BATCH_JID"; }
 [[ -e ${TMUX%%,*} ]] && { foreground=green; host=""; }
+
+# Start of prompt
+prompt-bg black
+[[ $UID -eq 0 ]] && prompt-fg yellow "⚡"
+((_MYZSHTHEME_BG)) && echo -n "%{%F{cyan}%}[$_MYZSHTHEME_BG] "
 prompt-fg $foreground "$username$host"
+version="$(git -C $_MYZSHTHEME log -1 --format=%H 2>/dev/null || echo none)"
+[[ "$_MYZSHTHEME_VERSION" == "$version" ]] || prompt-fg red "$SYMBOL_DEGREE"
 
 
 # ==============================================================================
