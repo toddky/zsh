@@ -34,6 +34,9 @@ autoload -Uz _zplugin
 #zplugin ice wait'!0'
 #zplugin load romkatv/gitstatus
 
+# TODO: Figure out how zing works
+# https://github.com/robobenklein/zinc
+
 zplugin ice wait'!0'
 zplugin load zsh-users/zsh-completions
 
