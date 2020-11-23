@@ -55,7 +55,9 @@ function _myzshtheme_preexec() {
 	echo -e "\x1b[38;5;8m[$(date +%T)] Starting timer\e[0m"
 	_start_ms=$(_get-ms)
 }
-add-zsh-hook preexec _myzshtheme_preexec
+if [[ ${preexec_functions[(ie)_myzshtheme_preexec]} -le ${#_myzshtheme_preexec} ]]; then
+	add-zsh-hook preexec _myzshtheme_preexec
+fi
 
 
 # ==============================================================================
@@ -94,7 +96,9 @@ function _myzshtheme_precmd() {
 	# TODO: Fix MAGIC_ENTER_BUFFER
 	#_autonotify
 }
-add-zsh-hook preexec _myzshtheme_precmd
+if [[ ${precmd_functions[(ie)_myzshtheme_precmd]} -le ${#_myzshtheme_precmd} ]]; then
+	add-zsh-hook precmd _myzshtheme_precmd
+fi
 
 # List hooks
 #add-zsh-hook -L
