@@ -8,6 +8,9 @@ exec 2> >(while read line; do echo -e "\e[31m[stderr]\e[0m $line"; done)
 # Immediately exit on failure
 set -eou pipefail
 
+# Install zsh
+which zsh &> /dev/null || sudo apt install zsh
+
 IFS=$'\n\t'
 
 # TODO: Use ZSH_CONFIG="$HOME/config/.zsh"
