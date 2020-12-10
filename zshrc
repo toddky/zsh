@@ -79,6 +79,7 @@ for plugin in $plugins; do
 done
 source $ZSH_CUSTOM/themes/my-theme.zsh-theme
 source $HOME/.zsh/zplugin
+(( ${PATH[(I)$HOME/bin]} )) || PATH=$HOME/bin:$PATH
 
 # Very cool plugin, just too slow
 #source "$ZSH_CUSTOM/downloads/zsh-autocomplete.plugin.zsh"
