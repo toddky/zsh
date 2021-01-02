@@ -29,17 +29,24 @@ if ((instant)); then
 	fi
 fi
 
+# ==============================================================================
+# $PATH
+# ==============================================================================
+# Add homebrew to $PATH
+if [[ -d '/opt/homebrew/bin' ]]; then
+	(( ${PATH[(I)$HOME/bin]} )) || PATH="/opt/homebrew/bin:$PATH"
+fi
+
+# Add bin directory to $PATH
+(( ${PATH[(I)$ZSH_CUSTOM/bin]} )) || PATH="$ZSH_CUSTOM/bin:$PATH"
+(( ${PATH[(I)$HOME/bin]} )) || PATH="$HOME/bin:$PATH"
+
 
 # ==============================================================================
 # ZSHRC
 # ==============================================================================
 export ZSH=$HOME/.oh-my-zsh
 export SHELL=$(builtin which zsh)
-
-# Add homebrew to path
-if [[ -d '/opt/homebrew/bin' ]]; then
-	(( ${PATH[(I)$HOME/bin]} )) || PATH="/opt/homebrew/bin:$PATH"
-fi
 
 if ((profile)); then
 	function source() {
@@ -84,7 +91,6 @@ for plugin in $plugins; do
 done
 source $ZSH_CUSTOM/themes/my-theme.zsh-theme
 source $HOME/.zsh/zplugin
-(( ${PATH[(I)$HOME/bin]} )) || PATH=$HOME/bin:$PATH
 
 # Very cool plugin, just too slow
 #source "$ZSH_CUSTOM/downloads/zsh-autocomplete.plugin.zsh"
