@@ -36,6 +36,11 @@ fi
 export ZSH=$HOME/.oh-my-zsh
 export SHELL=$(builtin which zsh)
 
+# Add homebrew to path
+if [[ -d '/opt/homebrew/bin' ]]; then
+	(( ${PATH[(I)$HOME/bin]} )) || PATH="/opt/homebrew/bin:$PATH"
+fi
+
 if ((profile)); then
 	function source() {
 		local start_ms=$(date +%s%3N)
