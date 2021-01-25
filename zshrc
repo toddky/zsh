@@ -71,9 +71,10 @@ plugins=(auto my-zsh)
 if [[ $(hostname --long) =~ arm.com$ ]]; then
 	plugins+=(arm lsf eda)
 fi
-plugins+=(bin cd vim xclip tmux vi-mode regex math setup git svn emacs)
+plugins+=(bin cd vim tmux vi-mode regex math setup git svn emacs)
 plugins+=(fzf)
 (hash lpass &>/dev/null)&&  plugins+=(lpass)
+(hash xclip &>/dev/null)&&  plugins+=(xclip)
 
 # TODO: Investigate more plugins
 # https://github.com/zsh-vi-more/vi-motions
