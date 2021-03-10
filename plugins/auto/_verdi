@@ -4,6 +4,7 @@
 cmd=$0
 if ! (hash $cmd &>/dev/null); then
 	module load synopsys/verdi3/2020.03
+	export AUTO_FORM_BUS_ALL=1
 fi
 if (hash $cmd &>/dev/null); then
 	unfunction $cmd
