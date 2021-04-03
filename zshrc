@@ -32,14 +32,11 @@ fi
 # ==============================================================================
 # $PATH
 # ==============================================================================
-# Add homebrew to $PATH
-if [[ -d '/opt/homebrew/bin' ]]; then
-	(( ${PATH[(I)$HOME/bin]} )) || PATH="/opt/homebrew/bin:$PATH"
-fi
-
-# Add bin directory to $PATH
-(( ${PATH[(I)$ZSH_CUSTOM/bin]} )) || PATH="$ZSH_CUSTOM/bin:$PATH"
-(( ${PATH[(I)$HOME/bin]} )) || PATH="$HOME/bin:$PATH"
+typeset -U path
+[[ -d '/opt/homebrew/bin' ]] && path+=('/opt/homebrew/bin')
+[[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
+path=("$ZSH_CUSTOM/bin" "${path[@]}")
+path=("$HOME/bin" "${path[@]}")
 
 
 # ==============================================================================
