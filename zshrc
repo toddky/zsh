@@ -70,8 +70,8 @@ if [[ $(hostname --long) =~ arm.com$ ]]; then
 fi
 plugins+=(bin cd vim tmux vi-mode regex math setup git svn emacs)
 plugins+=(fzf)
-(hash lpass &>/dev/null)&&  plugins+=(lpass)
-(hash xclip &>/dev/null)&&  plugins+=(xclip)
+(which lpass &>/dev/null) && plugins+=(lpass)
+(which xclip &>/dev/null) && plugins+=(xclip)
 
 # TODO: Investigate more plugins
 # https://github.com/zsh-vi-more/vi-motions
