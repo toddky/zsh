@@ -90,6 +90,17 @@ bindkey -M viins '^[p' vi-xclip-paste
 #bindkey -M viins "^?" backward-kill-word
 #bindkey -M viins '^[^?' backward-kill-word
 
+# TODO: Use emacs bindings
+# https://www.reddit.com/r/zsh/comments/ni5uqt/changing_the_vi_insert_mode_bindings/gz1922e/?utm_source=share&utm_medium=web2x&context=3
+# # Delete all existing keymaps and reset to the default state.
+# bindkey -d
+# # Retrieve emacs bindings in the form of "bindkey" commands.
+# local emacs_bindings=$(bindkey -L)
+# # Enable vi bindings.
+# bindkey -v
+# # Copy all bindings from "emacs" keymap to "viins".
+# eval $emacs_bindings
+
 
 # ==============================================================================
 # COMMAND MODE
