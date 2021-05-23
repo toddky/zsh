@@ -33,7 +33,6 @@ function zsh-theme() {
 	fi
 }
 
-
 # --- stderr ---
 alias -g 2null='2>/dev/null'
 alias -g 2out='2>&1'
@@ -100,6 +99,8 @@ alias find6='ls6 | grep -i'
 alias du1='du --max-depth=1'
 alias du2='du --max-depth=2'
 alias du3='du --max-depth=3'
+
+alias g='git'
 
 # Kakoune
 # https://discuss.kakoune.com/t/align-align-things/1481

@@ -75,7 +75,7 @@ plugins=(auto my-zsh)
 if [[ $(hostname --long) =~ arm.com$ ]]; then
 	plugins+=(arm lsf eda)
 fi
-plugins+=(bin cd vim tmux vi-mode regex math setup git svn emacs)
+plugins+=(bin cd vim tmux vi-mode regex math setup svn emacs)
 plugins+=(fzf)
 (which lpass &>/dev/null) && plugins+=(lpass)
 (which xclip &>/dev/null) && plugins+=(xclip)
