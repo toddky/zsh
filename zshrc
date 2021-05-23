@@ -38,6 +38,13 @@ typeset -U path
 path=("$ZSH_CUSTOM/bin" "${path[@]}")
 path=("$HOME/bin" "${path[@]}")
 
+# TODO: Test brew
+#if [[ $OSTYPE == darwin* && $CPUTYPE == arm64 ]]; then
+#	alias brew=/usr/local/homebrew/bin/brew
+#fi
+# or:
+#path+=(/usr/local/homebrew/bin(/))
+
 
 # ==============================================================================
 # ZSHRC
