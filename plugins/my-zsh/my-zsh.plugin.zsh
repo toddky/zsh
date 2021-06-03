@@ -89,22 +89,20 @@ alias ls4='find . -maxdepth 4'
 alias ls5='find . -maxdepth 5'
 alias ls6='find . -maxdepth 6'
 
-alias find1='ls1 | grep -i'
-alias find2='ls2 | grep -i'
-alias find3='ls3 | grep -i'
-alias find4='ls4 | grep -i'
-alias find5='ls5 | grep -i'
-alias find6='ls6 | grep -i'
-
 alias du1='du --max-depth=1'
 alias du2='du --max-depth=2'
 alias du3='du --max-depth=3'
 
-alias g='git'
-
 # Kakoune
 # https://discuss.kakoune.com/t/align-align-things/1481
 alias align="kak -f '<a-s><S>\h<ret><a-semicolon><&>'"
+
+
+
+# --- ps ---
+alias psf='ps --forest'
+alias killps="grep -v grep | awk '{print \$2}' | xargs kill"
+
 
 
 # ==============================================================================
@@ -179,6 +177,10 @@ function cp1() {
 # TODO: Fix this
 function xargsi() {
 	xargs -I% sh -c "$@"
+}
+
+function pme() {
+	psort | grep $USER | awk '($NF != "-zsh") {$8="\033[1;34m"$8"\033[0m"; print}'
 }
 
 # --- Colors ---
