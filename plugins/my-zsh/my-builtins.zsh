@@ -21,3 +21,11 @@ alias mkdir='mkdir -pv'
 alias pwd='pwd -P'
 alias which='whence -c -a'
 
+# grep -------------------------------------------------------------------------
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/lib/grep.zsh
+GREP_OPTIONS="--color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
+alias grep="grep $GREP_OPTIONS"
+alias egrep="egrep $GREP_OPTIONS"
+alias fgrep="fgrep $GREP_OPTIONS"
+unset GREP_OPTIONS
+
