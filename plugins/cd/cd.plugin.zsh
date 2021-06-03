@@ -23,8 +23,9 @@ alias cdpwd='cd $PWD 2>/dev/null || cd $(pwd) 2>/dev/null && pwd'
 alias cdtemp='cd $(mktemp -d)'
 alias cdl='cd $(command ls -t | head -n 1)'
 alias cdgit='cd $(git rev-parse --show-toplevel)'
-
+alias cdp='cd $(,paste)'
 alias d='dirs -v'
+
 
 # ==============================================================================
 # FUNCTIONS
@@ -32,6 +33,13 @@ alias d='dirs -v'
 function c() { cd -$1; }
 function cdd() {
 	cd $(dirname $(readlink -f $1))
+}
+function cdw() {
+	cd $(dirname $(whence -p $1))
+}
+function cdburst() {
+	burst root || return $?
+	cd "$BURST_ROOT"
 }
 
 # `cd` using `nnn`
@@ -72,7 +80,6 @@ function cdn() {
 			rm -f "$NNN_TMPFILE" > /dev/null
 	fi
 }
-
 
 # --- cup ---
 # cd 'up'
