@@ -99,6 +99,9 @@ for plugin in $plugins; do
 	if ! (($fpath[(Ie)$plugin_dir])); then
 		fpath+=("$plugin_dir")
 	fi
+	if [[ -d "$plugin_dir/bin" ]]; then
+		path=("$plugin_dir/bin" "${path[@]}")
+	fi
 	source "$plugin_dir/$plugin.plugin.zsh"
 done
 source $ZSH_CUSTOM/themes/my-theme.zsh-theme
