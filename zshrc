@@ -91,10 +91,21 @@ plugins+=(fzf)
 #setopt SOURCE_TRACE
 
 for plugin in $plugins; do
-	source "$ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh"
+	plugin_dir="$ZSH_CUSTOM/plugins/$plugin"
+	if [[ ! -f "$plugin_dir/$plugin.plugin.zsh" ]]; then
+		echo "Plugin '$plugin' not found"
+		continue
+	fi
+	if ! (($fpath[(Ie)$plugin_dir])); then
+		fpath+=("$plugin_dir")
+	fi
+	source "$plugin_dir/$plugin.plugin.zsh"
 done
 source $ZSH_CUSTOM/themes/my-theme.zsh-theme
 source $HOME/.zsh/zplugin
+
+# Load compdef functions
+autoload -U compaudit compinit
 
 # Very cool plugin, just too slow
 #source "$ZSH_CUSTOM/downloads/zsh-autocomplete.plugin.zsh"
