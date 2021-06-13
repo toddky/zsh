@@ -11,9 +11,17 @@ autoload -Uz add-zsh-hook
 # FUNVTIONS
 # ==============================================================================
 # Get current time (ms)
-function _get-ms() { date +%s%3N; }
+case "$OSTYPE" in
+	darwin*)
+		function _get-ms() {
+			python -c 'import time; print(int(time.time() * 1000))'
+		}
+		;;
+	*)
+		function _get-ms() { date +'%s%3N'; }
+		;;
+esac
 [[ -z $_start_ms ]] && _start_ms=$(_get-ms)
-
 
 # Autonotify
 ZSH_NOTIFY_CMD='^\s*(git|svn)'
@@ -69,7 +77,8 @@ fi
 function _myzshtheme_precmd() {
 
 	# Record elapsed time
-	local RETVAL=$? _current_ms=$(_get-ms)
+	local RETVAL=$? _current_ms
+	_current_ms=$(_get-ms)
 
 	# Print non-zero exit code
 	(( $RETVAL == 0 )) || echo "\e[31mExit code: $RETVAL\e[0m"
