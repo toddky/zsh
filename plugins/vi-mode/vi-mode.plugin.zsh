@@ -40,8 +40,11 @@ function vi-up-end() {
 
 zle -N vi-xclip-paste
 function vi-xclip-paste() {
-	#[[ -e ${TMUX%%,*} ]] && tmux show-buffer | xclip
-	LBUFFER="$LBUFFER$(xclip -o)"
+	if (type ,paste &>/dev/null); then
+		LBUFFER="$LBUFFER$(,paste)"
+	else
+		LBUFFER="$LBUFFER$(xclip -o)"
+	fi
 }
 
 function clear-on-empty-buffer() {
