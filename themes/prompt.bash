@@ -119,16 +119,29 @@ function dir-background() {
 	if [[ $ZSH_KEYMAP == vicmd ]]; then
 		echo -n magenta
 		return 0
-	elif ! (stat -c %n . &>/dev/null); then
-		echo -n red
-		return 0
-	elif [[ ! $PWD =~ $(whoami) ]]; then
+	fi
+
+	case "$OSTYPE" in
+		darwin*)
+			if ! (stat -f %N . &>/dev/null); then
+				echo -n red
+				return 0
+			fi
+			;;
+		*)
+			if ! (stat -c %n . &>/dev/null); then
+				echo -n red
+				return 0
+			fi
+			;;
+	esac
+
+	if [[ ! $PWD =~ $(whoami) ]]; then
 		echo -n cyan
 		return 0
-	else
-		echo -n blue
-		return 0
 	fi
+
+	echo -n blue
 }
 #prompt-bg $(dir-background) &
 prompt-bg $(dir-background)
@@ -137,16 +150,28 @@ prompt-bg $(dir-background)
 function dir-permission() {
 	local access me my_groups default=white
 	local user_fg=$default group_fg=$default world_fg=$default
-	access=$(stat -c %a . 2>/dev/null) || return
+
+	case "$OSTYPE" in
+		darwin*)
+			access=$(stat -f %A . 2>/dev/null) || return
+			owner="$(stat -f %Su . 2>/dev/null)"
+			group="$(stat -f %Sg . 2>/dev/null)"
+			;;
+		*)
+			access=$(stat -c %a . 2>/dev/null) || return
+			owner="$(stat -c %U . 2>/dev/null)"
+			group="$(stat -c %G . 2>/dev/null)"
+			;;
+	esac
 
 	# User permission
 	me="$(whoami 2>/dev/null || echo NOBODY)"
-	[[ "$me" == "$(stat -c %U . 2>/dev/null)" ]] || user_fg=red
+	[[ "$me" == "$owner" ]] || user_fg=red
 	prompt-fg $user_fg $(echo $access | rev | cut -b 3)
 
 	# Group permission
 	my_groups="$(groups 2>/dev/null || echo NONE)"
-	[[ $(groups) =~ $(stat -c %G . 2>&1) ]] || group_fg=red
+	[[ $(groups) =~ "$group" ]] || group_fg=red
 	prompt-fg $group_fg $(echo $access | rev | cut -b 2)
 
 	# World permission
