@@ -12,7 +12,11 @@ export SPROMPT="Use $fg_bold[green]%r$reset_color instead of $fg_bold[red]%R$res
 # LS_COLORS
 # ==============================================================================
 if [[ $HOME/.LS_COLORS ]]; then
-	eval $(dircolors -b $HOME/.LS_COLORS)
+	if (type dircolors &>/dev/null); then
+		eval $(dircolors -b $HOME/.LS_COLORS)
+	else
+		export CLICOLOR=yes
+	fi
 fi
 
 
