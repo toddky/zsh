@@ -93,9 +93,17 @@ function prompt-git() {
 	} &
 
 	# Get detailed status
-	stat=$(git status -sb -uno 2>/dev/null | head -1)
-	ahead=$(echo $stat | sed -n 's/.*ahead \([0-9]\+\).*/ +\1/p')
-	behind=$(echo $stat | sed -n 's/.*behind \([0-9]\+\).*/ -\1/p')
+	stat="$(git status -sb -uno 2>/dev/null | head -1)"
+	case "$OSTYPE" in
+		darwin*)
+			ahead="$(echo $stat | sed -n -E 's/.*ahead ([0-9]+).*/ +\1/p')"
+			behind="$(echo $stat | sed -n -E 's/.*behind ([0-9]+).*/ -\1/p')"
+			;;
+		*)
+			ahead="$(echo $stat | sed -n 's/.*ahead \([0-9]\+\).*/ +\1/p')"
+			behind="$(echo $stat | sed -n 's/.*behind \([0-9]\+\).*/ -\1/p')"
+			;;
+	esac
 
 	wait
 	prompt-fg yellow "$ahead"
