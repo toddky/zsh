@@ -63,7 +63,7 @@ fi
 # Setup compinit directory
 [[ -z $ZSH_COMPDIR ]] && export ZSH_COMPDIR=~/.config/zsh/zcompdir
 mkdir -p "$ZSH_COMPDIR" &> /dev/null
-export ZSH_COMPDUMP="$ZSH_COMPDIR/$(hostname --long)"
+export ZSH_COMPDUMP="$ZSH_COMPDIR/$(hostname -f)"
 autoload -U compinit
 _comp_options+=(globdots)
 compinit -i -C -d "$ZSH_COMPDUMP"
@@ -72,7 +72,7 @@ autoload colors && colors
 
 # Use plugins
 plugins=(auto my-zsh)
-if [[ $(hostname --long) =~ arm.com$ ]]; then
+if [[ $(hostname -f) =~ arm.com$ ]]; then
 	plugins+=(arm lsf eda)
 fi
 plugins+=(cd vim vi-mode regex setup svn)
