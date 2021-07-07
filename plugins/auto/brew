@@ -1,0 +1,17 @@
+
+# vi: ft=zsh
+
+cmd=$0
+
+# Use `brew` if available
+if (hash $cmd &>/dev/null); then
+	unfunction $cmd
+	$cmd "$@"
+	return
+else
+	brew_url='https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh'
+	echo "brew not installed, please run:"
+	echo '/bin/bash -c "$(curl -fsSL '$brew_url')"'
+	return 1
+fi
+
