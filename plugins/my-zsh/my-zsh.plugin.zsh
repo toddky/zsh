@@ -82,12 +82,6 @@ alias ll='ls -lrth'
 alias lll='ll | grep "\->"'
 alias lsd='ls -dl */'
 alias lla='ll -a'
-alias ls1='find . -maxdepth 1'
-alias ls2='find . -maxdepth 2'
-alias ls3='find . -maxdepth 3'
-alias ls4='find . -maxdepth 4'
-alias ls5='find . -maxdepth 5'
-alias ls6='find . -maxdepth 6'
 
 alias du1='du --max-depth=1'
 alias du2='du --max-depth=2'
@@ -150,16 +144,6 @@ function setdisp() {
 	[[ -z $VNCDESKTOP ]] && return
 	port=$(echo $VNCDESKTOP | awk 'match($1, /.*(:[0-9]+)/, groups) {print groups[1]}')
 	export DISPLAY=$port.0
-}
-
-function rmrf() {
-	local src dest
-	for src in $@; do
-		src=${src%/}
-		dest=$(dirname $src)/deleting.$(basename $src).$$
-		mv $src $dest
-		rm -rf $dest &
-	done
 }
 
 # Delete current directory
