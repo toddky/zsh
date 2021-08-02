@@ -75,7 +75,7 @@ plugins=(auto my-zsh)
 if [[ $(hostname -f) =~ arm.com$ ]]; then
 	plugins+=(arm lsf eda)
 fi
-plugins+=(cd vim vi-mode regex setup svn)
+plugins+=(cd vim vi-mode setup svn)
 plugins+=(fzf)
 (which lpass &>/dev/null) && plugins+=(lpass)
 
