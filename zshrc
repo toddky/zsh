@@ -33,8 +33,8 @@ fi
 # $PATH
 # ==============================================================================
 typeset -U path
-[[ -d '/opt/homebrew/bin' ]] && path+=('/opt/homebrew/bin')
-[[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
+[[ -d '/opt/homebrew/bin' ]] && path=('/opt/homebrew/bin' "${path[@]}")
+[[ -d "$HOME/.local/bin" ]] && path=("$HOME/.local/bin" "${path[@]}")
 path=("$ZSH_CUSTOM/bin" "${path[@]}")
 path=("$HOME/bin" "${path[@]}")
 
