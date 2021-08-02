@@ -15,8 +15,10 @@ export PATH=$here/bin:$PATH
 export FZF_COMPLETION_DIR=$here/completion
 
 local fzfpath=$(git -C $(dirname $(command which fzf)) rev-parse --show-toplevel)
-source $fzfpath/shell/key-bindings.zsh
-export MANPATH=$fzfpath/man:$MANPATH
+if [[ -f "$fzfpath/shell/key-bindings.zsh" ]]; then
+	source $fzfpath/shell/key-bindings.zsh
+	export MANPATH=$fzfpath/man:$MANPATH
+fi
 
 
 # ==============================================================================
