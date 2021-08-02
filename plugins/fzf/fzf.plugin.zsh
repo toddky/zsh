@@ -11,7 +11,6 @@ fi
 hash fzf &>/dev/null || return
 
 local here=${0:h}
-export PATH=$here/bin:$PATH
 export FZF_COMPLETION_DIR=$here/completion
 
 local fzfpath=$(git -C $(dirname $(command which fzf)) rev-parse --show-toplevel)
