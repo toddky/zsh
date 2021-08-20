@@ -12,7 +12,7 @@ exec 2> >(while read line; do printf "\e[31m[stderr]\e[0m $line\n"; done)
 set -eou pipefail
 
 # Install zsh
-which zsh &> /dev/null || sudo apt install zsh
+which zsh &> /dev/null || sudo apt install -y zsh
 
 IFS=$'\n\t'
 
